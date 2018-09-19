@@ -56,8 +56,7 @@ def determinate_time():
     """
     #6
     """
-    minutes = int(input('Випадкове число хвилин: '))
-    minutes %= 1440
+    minutes = int(input('Випадкове число хвилин: ')) % 1440
     print('{}:{}'.format(expand(minutes // 60), expand(minutes % 60)))
 
 

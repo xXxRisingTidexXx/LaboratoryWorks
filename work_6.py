@@ -4,6 +4,7 @@
 """
 from work_4 import to_decimal
 from math import log10, sqrt, sin, pi
+from decimal import ROUND_DOWN
 
 
 def calc_day():
@@ -24,8 +25,9 @@ def calc_salary():
     """
     #2
     """
-    x = int(input())
-    a = int(input())
+    numbers = input().split()
+    x = int(numbers[0])
+    a = int(numbers[1])
     print('{} грн.'.format(x if a <= 38 else x * (1 + 1.5 * (a - 38) / 38)))
 
 
@@ -33,13 +35,14 @@ def calc_percentage():
     """
     #3
     """
-    x = to_decimal(input())
-    p = to_decimal(float(input()) / 100.0)
-    y = to_decimal(input())
+    numbers = input().split()
+    x = to_decimal(numbers[0])
+    p = to_decimal(float(numbers[1]) / 100.0)
+    y = to_decimal(numbers[2])
     years = 0
     while y.compare(x) > 0:
         years += 1
-        x = to_decimal(x + x * p)
+        x = to_decimal(x + to_decimal(x * p, rounding_=ROUND_DOWN))
     print('{} років'.format(years))
 
 
@@ -47,12 +50,13 @@ def calc_multiplication():
     """
     #4
     """
-    a = int(input())
-    b = int(input())
+    numbers = input().split()
+    x = int(numbers[0])
+    a = int(numbers[1])
     m = 0
-    for i in range(1, abs(b) + 1):
-        m += abs(a)
-    print(m if a >= 0 and b >= 0 or a < 0 and b < 0 else -m)
+    for i in range(1, abs(a) + 1):
+        m += abs(x)
+    print(m if x >= 0 and a >= 0 or x < 0 and a < 0 else -m)
 
 
 def calc_function():

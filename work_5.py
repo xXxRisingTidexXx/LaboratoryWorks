@@ -25,9 +25,8 @@ def print_odd_numbers():
     """
     #2
     """
-    a = int(input())
-    b = int(input())
-    for i in range(a, b + 1, 1):
+    ab = input('Введіть a, b: ').split()
+    for i in range(int(ab[0]), int(ab[1]) + 1, 1):
         if i % 2 == 1:
             print(i, end=' ')
 
@@ -58,8 +57,9 @@ def build_multiplication_table():
     """
     #5
     """
-    a = int(input())
-    b = int(input())
+    numbers = input('Введіть a, b: ').split()
+    a = int(numbers[0])
+    b = int(numbers[1])
     for i in range(a, b + 1, 1):
         s = ''
         for j in range(1, b + 1, 1):

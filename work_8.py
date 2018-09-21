@@ -16,7 +16,9 @@ def calc_ring_square():
     for i in range(3):
         r1 = uniform(200, 400)
         r2 = uniform(1, r1)
-        print(format(r1, standard), format(r2, standard), format(compute_square(r1, r2), standard))
+        print('r1: {}  r2: {}  ring square: {}'.format(format(r1, standard),
+                                                       format(r2, standard),
+                                                       format(compute_square(r1, r2), standard)))
 
 
 def compute_square(r1, r2):
@@ -30,7 +32,8 @@ def calc_random_number_sum():
     a = randint(-128, 127)
     b = randint(-128, 127)
     c = randint(-128, 127)
-    print('a: {}  b: {}  c: {}  sum[a, b]: {}  sum[b, c]: {}'.format(a, b, c, compute_sum(a, b), compute_sum(b, c)))
+    print('sum[{}, {}]: {}'.format(a, b, compute_sum(a, b)))
+    print('sum[{}, {}]: {}'.format(b, c, compute_sum(b, c)))
 
 
 def compute_sum(a, b):
@@ -84,7 +87,7 @@ def convert_degrees():
     """
     for i in range(5):
         d = uniform(0, 1080)
-        print(format(d, standard), format(compute_radians(d), standard))
+        print('deg: {}  rad: {}'.format(format(d, standard), format(compute_radians(d), standard)))
 
 
 def compute_radians(d):
@@ -97,7 +100,7 @@ def calc_double_factorial():
     """
     for i in range(5):
         n = randint(1, 20)
-        print(n, computef(n))
+        print('n: {}  n!!: {}'.format(n, computef(n)))
 
 
 def computef(n):

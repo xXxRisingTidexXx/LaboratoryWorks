@@ -2,7 +2,7 @@
 Лабораторна робота №6
 ІПЗ - 12, Петраківський Данило
 """
-from work_4 import to_decimal
+from work_4 import decimalize
 from math import log10, sqrt, sin, pi
 from decimal import ROUND_DOWN
 
@@ -11,9 +11,9 @@ def calc_day():
     """
     #1
     """
-    distance = to_decimal(10)
-    percent = to_decimal(1.1)
-    norm = to_decimal(25)
+    distance = decimalize(10)
+    percent = decimalize(1.1)
+    norm = decimalize(25)
     day = 1
     while distance.compare(norm) < 0:
         distance *= percent
@@ -36,13 +36,13 @@ def calc_percentage():
     #3
     """
     numbers = input().split()
-    x = to_decimal(numbers[0])
-    p = to_decimal(float(numbers[1]) / 100.0)
-    y = to_decimal(numbers[2])
+    x = decimalize(numbers[0])
+    p = decimalize(float(numbers[1]) / 100.0)
+    y = decimalize(numbers[2])
     years = 0
     while y.compare(x) > 0:
         years += 1
-        x = to_decimal(x + to_decimal(x * p, rounding_=ROUND_DOWN))
+        x = decimalize(x + decimalize(x * p, rounding_=ROUND_DOWN))
     print('{} років'.format(years))
 
 
@@ -64,9 +64,9 @@ def calc_function():
     #5
     """
     tolerance_ = '.001'
-    a = to_decimal(input(), tolerance=tolerance_)
-    b = to_decimal(input(), tolerance=tolerance_)
-    d = to_decimal(input(), tolerance=tolerance_)
+    a = decimalize(input(), tolerance=tolerance_)
+    b = decimalize(input(), tolerance=tolerance_)
+    d = decimalize(input(), tolerance=tolerance_)
     while a.compare(b) <= 0:
         print(a, f(float(a)))
         a += d
@@ -93,11 +93,11 @@ def calc_armstrong_numbers():
     #7
     """
     for i in range(100, 1000):
-        if i == calc_digit_sum(i):
+        if i == dsum(i):
             print(i)
 
 
-def calc_digit_sum(n):
+def dsum(n):
     s = (n % 10) ** 3
     n //= 10
     s += (n % 10) ** 3

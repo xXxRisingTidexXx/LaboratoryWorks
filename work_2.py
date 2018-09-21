@@ -57,14 +57,14 @@ def determinate_time():
     #6
     """
     minutes = int(input('Випадкове число хвилин: ')) % 1440
-    print('{}:{}'.format(expand(minutes // 60), expand(minutes % 60)))
+    print('{}:{}'.format(extend(minutes // 60), extend(minutes % 60)))
 
 
-def expand(n):
+def extend(n):
     return str(n) if n >= 10 else '0{}'.format(n)
 
 
-def calculate_difference():
+def calc_difference():
     """
     #7
     """

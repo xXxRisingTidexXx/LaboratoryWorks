@@ -5,7 +5,7 @@
 from decimal import Decimal, ROUND_HALF_EVEN
 
 
-def week_day():
+def calc_week_day():
     """
     #1
     """
@@ -72,13 +72,13 @@ def are_at_the_current_area():
     """
     #7
     """
-    x = to_decimal(input())
-    y = to_decimal(input())
-    vertical = to_decimal(2)
-    r = to_decimal(4)
-    sqr_sum = to_decimal(x * x + y * y)
+    x = decimalize(input())
+    y = decimalize(input())
+    vertical = decimalize(2)
+    r = decimalize(4)
+    sqr_sum = decimalize(x * x + y * y)
     print('YES' if x.compare(y) > 0 and vertical.compare(x) > 0 and sqr_sum.compare(r) > 0 else 'NO')
 
 
-def to_decimal(numb, tolerance='.01', rounding_=ROUND_HALF_EVEN):
+def decimalize(numb, tolerance='.01', rounding_=ROUND_HALF_EVEN):
     return Decimal(numb).quantize(Decimal(tolerance), rounding=rounding_)

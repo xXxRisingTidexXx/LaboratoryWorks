@@ -4,7 +4,7 @@
 """
 from random import randint, uniform
 from math import sqrt
-from work_4 import to_decimal
+from work_4 import decimalize
 from numpy import roll
 
 
@@ -110,10 +110,10 @@ def draw_rectangle_table():
     pml = 0
     sml = 0
     for i in range(3):
-        x1 = to_decimal(input())
-        y1 = to_decimal(input())
-        x2 = to_decimal(input())
-        y2 = to_decimal(input())
+        x1 = decimalize(input())
+        y1 = decimalize(input())
+        x2 = decimalize(input())
+        y2 = decimalize(input())
         ps = calc_perimeter_and_square(x1, y1, x2, y2)
         table['x1'].append(str(x1))
         table['y1'].append(str(y1))

@@ -31,7 +31,7 @@ def print_odd_numbers():
             print(i, end=' ')
 
 
-def factorial():
+def calc_factorial():
     """
     #3
     """
@@ -42,7 +42,7 @@ def factorial():
     print(f)
 
 
-def build_ladder():
+def draw_ladder():
     """
     #4
     """
@@ -53,7 +53,7 @@ def build_ladder():
         print(s)
 
 
-def build_multiplication_table():
+def draw_multiplication_table():
     """
     #5
     """

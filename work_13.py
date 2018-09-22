@@ -76,6 +76,10 @@ def merge_two_lists():
     """
     a = [-5, 0, 34, 37, 87]
     b = [-34, -7, -2, 0, 21]
+    print(merge_asc(a, b))
+
+
+def merge_asc(a, b):
     c = []
     i = 0
     j = 0
@@ -94,7 +98,7 @@ def merge_two_lists():
         c += a[i:]
     if j != len(b):
         c += b[j:]
-    print(c)
+    return c
 
 
 def merge_three_lists():
@@ -113,10 +117,10 @@ def merge_three_lists():
     c = []
     for i in range(nc):
         c.append(int(input()))
-    print(merge(merge(a, b), c))
+    print(merge_desc(merge_desc(a, b), c))
 
 
-def merge(a, b):
+def merge_desc(a, b):
     c = []
     i = 0
     j = 0

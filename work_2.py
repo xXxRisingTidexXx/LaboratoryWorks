@@ -68,10 +68,10 @@ def calc_difference():
     """
     #7
     """
-    h1 = int(input())
-    m1 = int(input())
-    s1 = int(input())
-    h2 = int(input())
-    m2 = int(input())
-    s2 = int(input())
+    h1 = int(input('Введіть h1: '))
+    m1 = int(input('Введіть m1: '))
+    s1 = int(input('Введіть s1: '))
+    h2 = int(input('Введіть h2: '))
+    m2 = int(input('Введіть m2: '))
+    s2 = int(input('Введіть s2: '))
     print('{} сек.'.format((h2 - h1) * 3600 + (m2 - m1) * 60 + s2 - s1))

@@ -2,14 +2,16 @@
 Лабораторна робота №10
 ІПЗ - 12, Петраківський Данило
 """
-from work_8 import standard
+
+
+standard = '.3f'
 
 
 def make_snapshots():
     """
     #1
     """
-    name = input()
+    name = input('Введіть ім\'я: ')
     name_length = len(name)
     print(name[2])
     print(name[name_length - 2])
@@ -26,7 +28,7 @@ def trim():
     """
     #2
     """
-    lexemes = input().replace('    ', ' '). replace('   ', ' ').replace('  ', ' ').split()
+    lexemes = input('Введіть речення: ').replace('    ', ' '). replace('   ', ' ').replace('  ', ' ').split()
     word_count = 0
     for lexeme in lexemes:
         word_count += check_lexeme(lexeme)
@@ -44,7 +46,7 @@ def swap_name_and_surname():
     """
     #3
     """
-    names = input().split()
+    names = input('Введіть ім\'я та прізвище: ').split()
     print('{} {}'.format(names[1], names[0]))
 
 
@@ -52,7 +54,7 @@ def divide_name():
     """
     #4
     """
-    name = input()
+    name = input('Введіть ім\'я: ')
     name_length = len(name)
     half = name[:name_length // 2 + name_length % 2]
     print(name.replace(half, ''), half, sep='')
@@ -73,7 +75,7 @@ def format_full_name():
     """
     #6
     """
-    full_name = input().split()
+    full_name = input('Введіть ПІБ: ').split()
     print('{} {}.{}.'.format(full_name[2].capitalize(), full_name[0][0].capitalize(), full_name[1][0].capitalize()))
 
 
@@ -81,7 +83,7 @@ def calc_expression():
     """
     #7
     """
-    lex = input().split()
+    lex = input('Введіть вираз: ').split()
     ops = {'*': lambda x, y: float(x) * float(y), '/': lambda x, y: float(x) / float(y),
            '+': lambda x, y: float(x) + float(y), '-': lambda x, y: float(x) - float(y)}
     priority = is_prioritized(lex[1])

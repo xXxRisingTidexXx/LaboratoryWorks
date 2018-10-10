@@ -8,8 +8,8 @@ def transform_1():
     """
     #1
     """
-    n = int(input())
-    s = input()
+    n = int(input('Введіть n: '))
+    s = input('Введіть s: ')
     s_length = len(s)
     print(s[s_length - n::] if s_length >= n else '.' * (n - s_length) + s)
 
@@ -18,10 +18,10 @@ def transform_2():
     """
     #2
     """
-    n1 = int(input())
-    n2 = int(input())
-    s1 = input()
-    s2 = input()
+    n1 = int(input('Введіть n1: '))
+    n2 = int(input('Введіть n2: '))
+    s1 = input('Введіть s1: ')
+    s2 = input('Введіть s2: ')
     print(s1[:n1] + s2[(len(s2) - n2):])
 
 
@@ -29,7 +29,7 @@ def extract_word():
     """
     #3
     """
-    s = input()
+    s = input('Введіть s: ')
     if s.count(' ') <= 1:
         print('')
     else:
@@ -42,7 +42,7 @@ def extract_filename():
     """
     #4
     """
-    s = input()
+    s = input('Введіть s: ')
     print(s[s.rindex('/') + 1:s.rindex('.')])
 
 
@@ -50,7 +50,7 @@ def extract_extension():
     """
     #5
     """
-    s = input()
+    s = input('Введіть s: ')
     print(s[s.rindex('.') + 1:])
 
 
@@ -58,7 +58,7 @@ def encrypt_1():
     """
     #6
     """
-    text = input()
+    text = input('Введіть текст: ')
     encrypted_text = ''
     for ch in text:
         encrypted_text += chshift(ch) if ch.isalpha() else ch
@@ -75,8 +75,8 @@ def encrypt_2():
     """
     #7
     """
-    text = input()
-    k = int(input())
+    text = input('Введіть текст: ')
+    k = int(input('Введіть k: '))
     encrypted_text = ''
     for ch in text:
         encrypted_text += chshift(ch, shift=k) if ch.isalpha() else ch

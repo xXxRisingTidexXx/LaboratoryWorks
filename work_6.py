@@ -2,9 +2,8 @@
 Лабораторна робота №6
 ІПЗ - 12, Петраківський Данило
 """
-from work_4 import decimalize
 from math import log10, sqrt, sin, pi
-from decimal import ROUND_DOWN
+from decimal import Decimal, ROUND_DOWN, ROUND_HALF_EVEN
 
 
 def calc_day():
@@ -21,11 +20,15 @@ def calc_day():
     print(day)
 
 
+def decimalize(numb, t='.01', r=ROUND_HALF_EVEN):
+    return Decimal(numb).quantize(Decimal(t), rounding=r)
+
+
 def calc_salary():
     """
     #2
     """
-    numbers = input().split()
+    numbers = input('Введіть x, a: ').split()
     x = int(numbers[0])
     a = int(numbers[1])
     print('{} грн.'.format(x if a <= 38 else x * (1 + 1.5 * (a - 38) / 38)))
@@ -35,14 +38,14 @@ def calc_percentage():
     """
     #3
     """
-    numbers = input().split()
+    numbers = input('Введіть x, p, y: ').split()
     x = decimalize(numbers[0])
     p = decimalize(float(numbers[1]) / 100.0)
     y = decimalize(numbers[2])
     years = 0
     while y.compare(x) > 0:
         years += 1
-        x = decimalize(x + decimalize(x * p, rounding_=ROUND_DOWN))
+        x = decimalize(x + decimalize(x * p, r=ROUND_DOWN))
     print('{} років'.format(years))
 
 
@@ -50,7 +53,7 @@ def calc_multiplication():
     """
     #4
     """
-    numbers = input().split()
+    numbers = input('Введіть x, a: ').split()
     x = int(numbers[0])
     a = int(numbers[1])
     m = 0
@@ -63,10 +66,10 @@ def calc_function():
     """
     #5
     """
-    tolerance_ = '.001'
-    a = decimalize(input(), tolerance=tolerance_)
-    b = decimalize(input(), tolerance=tolerance_)
-    d = decimalize(input(), tolerance=tolerance_)
+    tolerance = '.001'
+    a = decimalize(input('Введіть a: '), t=tolerance)
+    b = decimalize(input('Введіть b: '), t=tolerance)
+    d = decimalize(input('Введіть d: '), t=tolerance)
     while a.compare(b) <= 0:
         print(a, f(float(a)))
         a += d

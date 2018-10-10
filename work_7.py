@@ -2,9 +2,9 @@
 Лабораторна робота №7
 ІПЗ - 12, Петраківський Данило
 """
+from decimal import Decimal, ROUND_HALF_EVEN
 from random import randint, uniform
 from math import sqrt
-from work_4 import decimalize
 from numpy import roll
 
 
@@ -110,10 +110,10 @@ def draw_rectangle_table():
     pml = 0
     sml = 0
     for i in range(3):
-        x1 = decimalize(input())
-        y1 = decimalize(input())
-        x2 = decimalize(input())
-        y2 = decimalize(input())
+        x1 = decimalize(input('Введіть x1: '))
+        y1 = decimalize(input('Введіть y1: '))
+        x2 = decimalize(input('Введіть x2: '))
+        y2 = decimalize(input('Введіть y2: '))
         ps = calc_perimeter_and_square(x1, y1, x2, y2)
         table['x1'].append(str(x1))
         table['y1'].append(str(y1))
@@ -137,6 +137,10 @@ def draw_rectangle_table():
         print('|{}'.format(expand(table['x1'][i], x1ml)), expand(table['y1'][i], y1ml),
               expand(table['x2'][i], x2ml), expand(table['y2'][i], y2ml),
               expand(table['p'][i], pml), '{}|'.format(expand(table['s'][i], sml)), sep='|')
+
+
+def decimalize(numb):
+    return Decimal(numb).quantize(Decimal('.01'), rounding=ROUND_HALF_EVEN)
 
 
 def calc_perimeter_and_square(x1, y1, x2, y2):

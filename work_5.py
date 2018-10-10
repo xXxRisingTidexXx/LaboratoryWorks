@@ -60,9 +60,9 @@ def draw_multiplication_table():
     numbers = input('Введіть a, b: ').split()
     a = int(numbers[0])
     b = int(numbers[1])
-    for i in range(a, b + 1, 1):
+    for i in range(a, b + 1):
         s = ''
-        for j in range(1, b + 1, 1):
+        for j in range(1, b + 1):
             mul = i * j
             s += '{} x {} = {}{}'.format(i, j, mul, '' if j == b else (' | ' if mul >= 10 else '  | '))
         print(s)

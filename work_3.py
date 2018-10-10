@@ -3,7 +3,6 @@
 ІПЗ - 12, Петраківський Данило
 """
 from math import modf, sqrt, log, e, sin, fabs, ceil
-from work_2 import extend
 
 
 def calc_fraction():
@@ -34,8 +33,8 @@ def calc_man_perfect_weight():
     """
     #4
     """
-    height = float(input())
-    weight = float(input())
+    height = float(input('Введіть ваш зріст: '))
+    weight = float(input('Введіть вашу масу: '))
     pw = height * 0.712 - 58
     print('Ваша ідеальна вага: {}\nКоригування: {}'.format(format(pw, '.3f'),
                                                            format(fabs(pw - weight), '.3f')))
@@ -45,9 +44,9 @@ def record_sound():
     """
     #5
     """
-    v = float(input())
-    d = float(input())
-    t = float(input())
+    v = float(input('Введіть v: '))
+    d = float(input('Введіть d: '))
+    t = float(input('Введіть t: '))
     print('{} Кбайт'.format(ceil(v * d * t / 8 / 1024)))
 
 
@@ -55,9 +54,9 @@ def determinate_time_1():
     """
     #6
     """
-    h = float(input())
-    m = float(input())
-    s = float(input())
+    h = float(input('Введіть h: '))
+    m = float(input('Введіть m: '))
+    s = float(input('Введіть s: '))
     print('{} град.'.format(format(30 * (h + m / 60 + s / 3600), '.2f')))
 
 
@@ -71,3 +70,7 @@ def determinate_time_2():
     m = int(a // 0.5)
     a %= 0.5
     print('{}:{}:{}'.format(extend(h), extend(m), extend(int(a // (0.5 / 60)))))
+
+
+def extend(n):
+    return str(n) if n >= 10 else '0{}'.format(n)

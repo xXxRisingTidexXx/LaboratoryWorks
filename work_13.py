@@ -2,23 +2,17 @@
 Лабораторна робота №13
 ІПЗ - 12, Петраківський Данило
 """
-from work_4 import decimalize
+from decimal import Decimal, ROUND_HALF_EVEN
 
 
 def combine_lists():
     """
     #1
     """
-    n = int(input())
-    a = []
-    for i in range(n):
-        a.append(int(input()))
-    b = []
-    for i in range(n):
-        b.append(int(input()))
-    c = []
-    for i in range(n):
-        c.append(max(a[i], b[i]))
+    n = int(input('Введіть n: '))
+    a = [int(input('a[{}]: '.format(i))) for i in range(n)]
+    b = [int(input('b[{}]: '.format(i))) for i in range(n)]
+    c = [max(a[i], b[i]) for i in range(n)]
     print(c)
 
 
@@ -26,7 +20,7 @@ def filter_elements():
     """
     #2
     """
-    a = input().split()
+    a = input('Введіть масив: ').split()
     b = a[::3]
     print('b.length: {}  b: {}'.format(len(b), b))
 
@@ -35,7 +29,7 @@ def shuffle_elements():
     """
     #3
     """
-    a = input().split()
+    a = input('Введіть масив: ').split()
     print(a[::2] + a[1::2])
 
 
@@ -43,10 +37,8 @@ def supply_list():
     """
     #4
     """
-    n = int(input())
-    a = []
-    for i in range(n):
-        a.append(int(input()))
+    n = int(input('Введіть n: '))
+    a = [int(input('a[{}]: '.format(i))) for i in range(n)]
     b = [a[0]]
     for i in range(1, n):
         b.append((i * b[i - 1] + a[i]) / (i + 1))
@@ -57,11 +49,11 @@ def allocate_elements():
     """
     #5
     """
-    n = int(input())
+    n = int(input('Введіть n: '))
     b = []
     c = []
     for i in range(n):
-        element = decimalize(input())
+        element = decimalize(input('a[{}]: '.format(i)))
         if element.compare(0) >= 0:
             b.append(element)
         else:
@@ -70,24 +62,36 @@ def allocate_elements():
     print('c.length: {}  c: {}'.format(len(c), c))
 
 
+def decimalize(numb):
+    return Decimal(numb).quantize(Decimal('.01'), rounding=ROUND_HALF_EVEN)
+
+
 def merge_two_lists():
     """
     #6
     """
     a = [-5, 0, 34, 37, 87]
     b = [-34, -7, -2, 0, 21]
-    print(merge_asc(a, b))
+    print(merge(a, b))
 
 
-def merge_asc(a, b):
+def casc(x, y):
+    return x > y
+
+
+def cdesc(x, y):
+    return x < y
+
+
+def merge(a, b, order=casc):
     c = []
     i = 0
     j = 0
     while i < len(a) and j < len(b):
-        if a[i] > b[j]:
+        if order(a[i], b[j]):
             c.append(b[j])
             j += 1
-        elif b[j] > a[i]:
+        elif order(b[j], a[i]):
             c.append(a[i])
             i += 1
         else:
@@ -105,38 +109,10 @@ def merge_three_lists():
     """
     #7
     """
-    na = int(input())
-    a = []
-    for i in range(na):
-        a.append(int(input()))
-    nb = int(input())
-    b = []
-    for i in range(nb):
-        b.append(int(input()))
-    nc = int(input())
-    c = []
-    for i in range(nc):
-        c.append(int(input()))
-    print(merge_desc(merge_desc(a, b), c))
-
-
-def merge_desc(a, b):
-    c = []
-    i = 0
-    j = 0
-    while i < len(a) and j < len(b):
-        if a[i] < b[j]:
-            c.append(b[j])
-            j += 1
-        elif b[j] < a[i]:
-            c.append(a[i])
-            i += 1
-        else:
-            c.append(a[i])
-            i += 1
-            j += 1
-    if i != len(a):
-        c += a[i:]
-    if j != len(b):
-        c += b[j:]
-    return c
+    na = int(input('Введіть na: '))
+    a = [int(input('a[{}]: '.format(i))) for i in range(na)]
+    nb = int(input('Введіть nb: '))
+    b = [int(input('b[{}]: '.format(i))) for i in range(nb)]
+    nc = int(input('Введіть nc: '))
+    c = [int(input('c[{}]: '.format(i))) for i in range(nc)]
+    print(merge(merge(a, b, order=cdesc), c, order=cdesc))

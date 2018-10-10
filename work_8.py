@@ -50,9 +50,9 @@ def perform_operations():
     """
     #3
     """
-    a = float(input())
-    b = float(input())
-    o = int(input())
+    a = float(input('Ввведіть a: '))
+    b = float(input('Ввведіть b: '))
+    o = int(input('Ввведіть operation: '))
     if o == 1:
         print(a - b)
     elif o == 2:

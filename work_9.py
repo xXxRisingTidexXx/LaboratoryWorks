@@ -3,7 +3,9 @@
 ІПЗ - 12, Петраківський Данило
 """
 from random import randint, uniform, sample
-from work_8 import standard
+
+
+standard = '.3f'
 
 
 def calc_factorial():

@@ -75,15 +75,17 @@ def merge_two_lists():
     print(merge(a, b))
 
 
-def casc(x, y):
+# noinspection PyPep8Naming
+def CASC(x, y):
     return x > y
 
 
-def cdesc(x, y):
+# noinspection PyPep8Naming
+def CDESC(x, y):
     return x < y
 
 
-def merge(a, b, order=casc):
+def merge(a, b, order=CASC):
     c = []
     i = 0
     j = 0
@@ -115,4 +117,4 @@ def merge_three_lists():
     b = [int(input('b[{}]: '.format(i))) for i in range(nb)]
     nc = int(input('Введіть nc: '))
     c = [int(input('c[{}]: '.format(i))) for i in range(nc)]
-    print(merge(merge(a, b, order=cdesc), c, order=cdesc))
+    print(merge(merge(a, b, order=CDESC), c, order=CDESC))

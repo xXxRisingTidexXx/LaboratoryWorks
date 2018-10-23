@@ -98,3 +98,10 @@ def parse_file_elements():
             m *= num
         print('average arithmetic: %f  average geometric: %f' %
               (s / length * buffer, m ** (1 / length * buffer)))
+
+# create_integer_file()
+# with open('res/ints', 'rb') as file:
+#     byte_list = file.read()
+#     for i in range(0, len(byte_list), buffer):
+#         print(unpack('i', byte_list[slice(i, i + buffer)])[0])
+#

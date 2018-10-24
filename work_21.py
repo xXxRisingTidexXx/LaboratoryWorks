@@ -14,10 +14,15 @@ def write_squares():
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'r+b') as file:
         byte_list = file.read()
-        file.seek(0)
+        clear(file)
         for i in range(0, len(byte_list), buffer):
             num = unpack('f', byte_list[slice(i, i + buffer)])[0]
             file.write(pack('f', num * num))
+
+
+def clear(file):
+    file.seek(0)
+    file.truncate()
 
 
 def rearrange_elements():
@@ -27,7 +32,7 @@ def rearrange_elements():
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'r+b') as file:
         byte_list = file.read()
-        file.seek(0)
+        clear(file)
         i = 0
         j = len(byte_list) // buffer - 1
         while j - i > 1:
@@ -59,11 +64,9 @@ def swap_contents():
     with open(filename_1, 'r+b') as file_1, open(filename_2, 'r+b') as file_2:
         bytes_1 = file_1.read()
         bytes_2 = file_2.read()
-        file_1.seek(0)
-        file_1.truncate()
+        clear(file_1)
         file_1.write(bytes_2)
-        file_2.seek(0)
-        file_2.truncate()
+        clear(file_2)
         file_2.write(bytes_1)
 
 
@@ -100,8 +103,7 @@ def delete_data():
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'r+b') as file:
         byte_list = file.read()
-        file.seek(0)
-        file.truncate()
+        clear(file)
         length = len(byte_list)
         for i in range(length // 2, length, buffer):
             file.write(byte_list[slice(i, i + buffer)])

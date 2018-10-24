@@ -3,6 +3,7 @@
 ІПЗ - 12, Петраківський Данило
 """
 from struct import pack, unpack
+from os import stat
 
 buffer = 4
 
@@ -48,13 +49,9 @@ def create_absent_file():
     filename_1 = input('Введіть ім\'я 1 файлу: ')
     filename_2 = input('Введіть ім\'я 2 файлу: ')
     with open(filename_1, 'rb') as file_1, open(filename_2, 'wb') as file_2:
-        # file_2.write(file_1.read(ibuffer))
-        # file_1.seek(ibuffer, 2)
-        # file_2.write(file_1.read(ibuffer))
-        byte_list = file_1.read()
-        length = len(byte_list)
-        file_2.write(byte_list[slice(0, buffer)])
-        file_2.write(byte_list[slice(length - buffer, length)])
+        file_2.write(file_1.read(buffer))
+        file_1.seek(stat(filename_1).st_size - buffer)
+        file_2.write(file_1.read(buffer))
 
 
 def create_equal_file():
@@ -79,10 +76,11 @@ def create_two_partial_files():
     with open(filename_1, 'rb') as file_1, open(filename_2, 'wb') as file_2, open(filename_3, 'wb') as file_3:
         byte_list = file_1.read()
         for i in range(0, len(byte_list), buffer):
+            num = byte_list[slice(i, i + buffer)]
             if i % 2 == 1:
-                file_2.write(byte_list[slice(i, i + buffer)])
+                file_2.write(num)
             else:
-                file_3.write(byte_list[slice(i, i + buffer)])
+                file_3.write(num)
 
 
 def parse_file_elements():
@@ -101,11 +99,3 @@ def parse_file_elements():
             m *= num
         print('average arithmetic: %f  average geometric: %f' %
               (s / length * buffer, m ** (1 / length * buffer)))
-
-
-# create_absent_file()
-# with open('res/ints', 'rb') as file:
-#     byte_list = file.read()
-#     for i in range(0, len(byte_list), ibuffer):
-#         print(unpack('i', byte_list[slice(i, i + ibuffer)])[0], end=' ')
-#     print()

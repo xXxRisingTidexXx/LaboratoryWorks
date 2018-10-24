@@ -126,10 +126,14 @@ def sort_character_file():
         chars = [unpack('c', byte_list[slice(i, i + cbuffer)])[0].decode(encoding)
                  for i in range(0, len(byte_list), cbuffer)]
         chars.sort()
-        file.seek(0)
-        file.truncate()
+        clear(file)
         for char in chars:
             file.write(pack('c', char.encode(encoding)))
+
+
+def clear(file):
+    file.seek(0)
+    file.truncate()
 
 
 def sort_string_file():
@@ -140,6 +144,5 @@ def sort_string_file():
     with open(filename, 'r+b') as file:
         lines = [line for line in file.readlines()]
         lines.sort()
-        file.seek(0)
-        file.truncate()
+        clear(file)
         file.writelines(lines)

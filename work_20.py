@@ -38,7 +38,7 @@ def print_file_element():
     k = int(input('Введіть k: ')) - 1
     with open(filename, 'rb') as file:
         file.seek(k * buffer)
-        print(unpack('I', file.read(buffer))[0])
+        print(unpack('i', file.read(buffer))[0])
 
 
 def create_absent_file():
@@ -48,6 +48,9 @@ def create_absent_file():
     filename_1 = input('Введіть ім\'я 1 файлу: ')
     filename_2 = input('Введіть ім\'я 2 файлу: ')
     with open(filename_1, 'rb') as file_1, open(filename_2, 'wb') as file_2:
+        # file_2.write(file_1.read(ibuffer))
+        # file_1.seek(ibuffer, 2)
+        # file_2.write(file_1.read(ibuffer))
         byte_list = file_1.read()
         length = len(byte_list)
         file_2.write(byte_list[slice(0, buffer)])
@@ -99,9 +102,10 @@ def parse_file_elements():
         print('average arithmetic: %f  average geometric: %f' %
               (s / length * buffer, m ** (1 / length * buffer)))
 
-# create_integer_file()
+
+# create_absent_file()
 # with open('res/ints', 'rb') as file:
 #     byte_list = file.read()
-#     for i in range(0, len(byte_list), buffer):
-#         print(unpack('i', byte_list[slice(i, i + buffer)])[0])
-#
+#     for i in range(0, len(byte_list), ibuffer):
+#         print(unpack('i', byte_list[slice(i, i + ibuffer)])[0], end=' ')
+#     print()

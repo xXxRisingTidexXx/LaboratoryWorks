@@ -5,7 +5,6 @@
 from struct import unpack, pack
 from math import sqrt
 from os import stat
-from random import uniform
 
 buffer = 4
 
@@ -81,6 +80,7 @@ def subtract_matrices():
             input('Введіть ім\'я 3 файлу: '), lambda x, y: x - y)
 
 
+# noinspection PyUnusedLocal
 def multiply_matrices():
     """
     #6
@@ -98,22 +98,3 @@ def multiply_matrices():
                 for k in range(m):
                     element += matrix_1[i][k] * matrix_2[k][j]
                 file_3.write(pack('f', element))
-
-
-def create_matrix(filename):
-    with open(filename, 'wb') as file:
-        matrix = [[-1, 2, -5], [3, 4, 1], [0, 1, 2]]
-        for i in range(3):
-            for j in range(3):
-                file.write(pack('f', matrix[i][j]))
-
-
-create_matrix('res/matrix1')
-create_matrix('res/matrix2')
-multiply_matrices()
-with open('res/matrix', 'rb') as file:
-    m = get_square_matrix_size('res/matrix')
-    for i in range(m):
-        for j in range(m):
-            print(unpack('f', file.read(buffer))[0], end=' ')
-        print()

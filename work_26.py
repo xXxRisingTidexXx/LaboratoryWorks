@@ -60,11 +60,11 @@ def sort_list():
     #3
     """
     na = int(input('Введіть na: '))
-    a = [decimalize(input('Введіть a[{}]: '.format(i))) for i in range(na)]
+    a = [float(input('Введіть a[{}]: '.format(i))) for i in range(na)]
     nb = int(input('Введіть nb: '))
-    b = [decimalize(input('Введіть b[{}]: '.format(i))) for i in range(nb)]
+    b = [float(input('Введіть b[{}]: '.format(i))) for i in range(nb)]
     nc = int(input('Введіть nc: '))
-    c = [decimalize(input('Введіть c[{}]: '.format(i))) for i in range(nc)]
+    c = [float(input('Введіть c[{}]: '.format(i))) for i in range(nc)]
     print('a: {}'.format(sort(a)))
     print('b: {}'.format(sort(b)))
     print('c: {}'.format(sort(c)))

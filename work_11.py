@@ -59,15 +59,12 @@ def encrypt_1():
     #6
     """
     text = input('Введіть текст: ')
-    encrypted_text = ''
-    for ch in text:
-        encrypted_text += chshift(ch) if ch.isalpha() else ch
-    print(encrypted_text)
+    print(''.join([chshift(ch) if ch.isalpha() else ch for ch in text]))
 
 
 def chshift(ch, shift=1):
     encr = ord(ch) + shift
-    return (chr(encr) if encr <= 90 else chr(encr - 26)) if ch.isupper() \
+    return chr(encr) if encr <= 90 else chr(encr - 26) if ch.isupper() \
         else (chr(encr) if encr <= 122 else chr(encr - 26))
 
 
@@ -77,7 +74,4 @@ def encrypt_2():
     """
     text = input('Введіть текст: ')
     k = int(input('Введіть k: '))
-    encrypted_text = ''
-    for ch in text:
-        encrypted_text += chshift(ch, shift=k) if ch.isalpha() else ch
-    print(encrypted_text)
+    print(''.join([chshift(ch, shift=k) if ch.isalpha() else ch for ch in text]))

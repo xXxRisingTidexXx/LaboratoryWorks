@@ -15,7 +15,7 @@ def output_properties():
     print('Розширення: {}'.format(props[1]))
     print('Тип: {}'.format(props[2]))
     print('Дата останнього редагування: {}'.format(props[3]))
-    print('Атрибути: {}'.format(props[4]))
+    print('Розмір: {}'.format(props[4]))
 
 
 def properties(filename):
@@ -43,21 +43,73 @@ def numerate_rows():
     """
     #3
     """
+    filename = input('Введіть ім\'я файлу: ')
+    n = int(input('Введіть n: '))
+    k = int(input('Введіть k: '))
+    m = int(input('Введіть m: '))
+    with open(filename, 'r+') as file:
+        lines = file.readlines()
+        clear(file)
+        for line in lines:
+            file.write(expand(n, k, m, line))
+            n += 1
+
+
+def clear(file):
+    file.seek(0)
+    file.truncate()
+
+
+def expand(n, k, m, line):
+    return '{}{}{}{}'.format(' ' * (k - len(str(n))), n, ' ' * m if line != '\n' else '', line)
 
 
 def create_files():
     """
     #4
     """
+    filename_1 = input('Введіть ім\'я 1 файлу: ')
+    filename_2 = input('Введіть ім\'я 2 файлу: ')
+    filename_3 = input('Введіть ім\'я 3 файлу: ')
+    k = int(input('Введіть k: '))
+    with open(filename_1, 'r') as file_1, open(filename_2, 'w') as file_2, open(filename_3, 'w') as file_3:
+        lines = file_1.readlines()
+        for i in range(k):
+            file_2.write(lines[i])
+        for i in range(k, len(lines)):
+            file_3.write(lines[i])
 
 
-def text_to_binary():
+def text_file_to_binary_file():
     """
     #5
     """
+    for i in range(2):
+        text_to_binary(input('Введіть ім\'я {} файлу: '.format(i + 1)))
+
+
+def text_to_binary(filename):
+    with open(filename, 'r') as text_file, open(filename.partition('.')[0], 'wb') as binary_file:
+        binary_file.write(bytes((text_file.read().encode('utf-8'))))
 
 
 def caesar_cipher():
     """
     #6
     """
+    filename = input('Введіть ім\'я файлу: ')
+    k = int(input('Введіть k: '))
+    with open(filename, 'r+') as file:
+        text = file.read()
+        print(text)
+        clear(file)
+        file.write(''.join([chshift(ch, k) if ch.isalpha() else ch for ch in text]))
+
+
+def chshift(ch, shift):
+    encr = ord(ch) + shift
+    return (chr(encr) if encr <= 90 else chr(encr - 26)) if ch.isupper() \
+        else (chr(encr) if encr <= 122 else chr(encr - 26))
+
+
+caesar_cipher()

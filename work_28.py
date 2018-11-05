@@ -110,6 +110,3 @@ def chshift(ch, shift):
     encr = ord(ch) + shift
     return (chr(encr) if encr <= 90 else chr(encr - 26)) if ch.isupper() \
         else (chr(encr) if encr <= 122 else chr(encr - 26))
-
-
-caesar_cipher()

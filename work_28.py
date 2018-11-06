@@ -6,6 +6,11 @@ from os import stat
 from re import match
 
 
+types = {'': 'binary', '.txt': 'text', '.pdf': 'text', '.doc': 'text', '.docx': 'text',
+         '.mp3': 'audio', '.wav': 'audio', '.mp4': 'video', '.flv': 'video', '.ppt': 'presentations',
+         '.pptx': 'presentations', '.xls': 'spreadsheets', '.xlsx': 'spreadsheets'}
+
+
 def output_properties():
     """
     #1
@@ -20,7 +25,8 @@ def output_properties():
 
 def properties(filename):
     state = stat(filename)
-    return filename, match(r'\S+(\.\w+)$', filename).groups()[0], 'file', state.st_mtime, state.st_size
+    extension = match(r'\S+(\.\w+)$', filename).groups()[0]
+    return filename, extension, types[extension], state.st_mtime, state.st_size
 
 
 def output_row_count():

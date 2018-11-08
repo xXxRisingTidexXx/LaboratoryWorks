@@ -27,7 +27,11 @@ def read_dictionaries():
     Read the list of the word dictionaries.
     """
     with open('res/dictionaries.txt') as file:
-        return {line[:line.index(' ')]: line[line.index(' ') + 1:] for line in file.readlines()}
+        dictionaries = {}
+        for line in file.readlines():
+            kv = line.split()
+            dictionaries[kv[0]] = kv[1]
+        return dictionaries
 
 
 HANGED_MEN = read_hanged_men()
@@ -45,10 +49,11 @@ class Word:
     """
     choice = None
     letter_index = 0
-    recognition = ''
+    recognition = None
 
     def __init__(self, chosen_word):
         self.choice = chosen_word
+        self.recognition = '_' * len(chosen_word)
 
     def is_recognized(self):
         """
@@ -60,11 +65,12 @@ class Word:
         """
         Check if player has recognized a regular letter in the word.
         """
-        check = self.choice[self.letter_index] == letter
-        if check:
-            self.recognition += letter
+        check_result = self.choice[self.letter_index] == letter
+        if check_result:
+            underscore_index = self.recognition.index('_')
+            self.recognition = self.choice[:underscore_index + 1] + self.recognition[underscore_index + 1:]
             self.letter_index += 1
-        return check
+        return check_result
 
 
 class HangedMan:
@@ -138,7 +144,7 @@ def play():
     Business logic function, where game process occurs.
     """
     dictionary = choice(list(DICTIONARIES.items()))
-    word = Word(choice(dictionary[1]))
+    word = Word(choose_word(dictionary[1]))
     hanged_man = HangedMan()
     make_time_delay()
     print_dictionary_name(dictionary[0])
@@ -155,6 +161,14 @@ def make_time_delay():
     """
     print('\nЗагадаується слово...')
     sleep(2)
+
+
+def choose_word(dictionary_filename):
+    """
+    Choose a random word from the current dictionary.
+    """
+    with open(dictionary_filename) as dictionary_file:
+        return choice([word for line in dictionary_file.readlines() for word in line.split()])
 
 
 def print_dictionary_name(dict_name):
@@ -196,8 +210,10 @@ def read_decision():
     Read player's decision regards game continuation.
     """
     while True:
-        decision = input('Бажаєте зіграти ще одну гру?({}/{}): '.format(YES, NO))
-        if decision == YES or decision == NO:
+        decision = input('Бажаєте зіграти ще одну гру?({}/{}): '.format(YES.upper(), NO))
+        if decision == '':
+            return YES
+        elif decision == YES or decision == NO:
             return decision
         print('Некоректне введення; спробуйте ще.')
 

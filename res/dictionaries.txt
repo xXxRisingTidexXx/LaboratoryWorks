@@ -1,0 +1,4 @@
+Тварини res/animals.txt
+Кольори res/colors.txt
+Фігури res/figures.txt
+Фрукти res/fruits.txt

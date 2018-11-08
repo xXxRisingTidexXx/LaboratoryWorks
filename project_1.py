@@ -22,16 +22,16 @@ def read_hanged_men():
         return file.read().split('\n\n')
 
 
-def read_words():
+def read_dictionaries():
     """
-    Return the list of the words to recognize.
+    Read the list of the word dictionaries.
     """
-    with open('res/words.txt') as file:
-        return [word for line in file.readlines() for word in line.split()]
+    with open('res/dictionaries.txt') as file:
+        return {line[:line.index(' ')]: line[line.index(' ') + 1:] for line in file.readlines()}
 
 
 HANGED_MEN = read_hanged_men()
-WORDS = read_words()
+DICTIONARIES = read_dictionaries()
 YES = 'так'
 NO = 'ні'
 
@@ -43,9 +43,12 @@ class Word:
     >>> Word().choice != ''
     True
     """
-    choice = choice(WORDS)
+    choice = None
     letter_index = 0
     recognition = ''
+
+    def __init__(self, chosen_word):
+        self.choice = chosen_word
 
     def is_recognized(self):
         """
@@ -94,7 +97,7 @@ def start():
 
     >>> len(HANGED_MEN) >= 2
     True
-    >>> len(WORDS) >= 1
+    >>> len(DICTIONARIES) >= 1
     True
     """
     clear()
@@ -120,21 +123,29 @@ def print_intro():
     """
     with open('res/intro.txt') as file:
         print(file.read())
-        input('Натисніть Enter...')
+        press_enter()
+
+
+def press_enter():
+    """
+    Servant function, similar to 'Press any key...'.
+    """
+    input('Натисніть Enter...')
 
 
 def play():
     """
     Business logic function, where game process occurs.
     """
-    make_time_delay()
-    word = Word()
+    dictionary = choice(list(DICTIONARIES.items()))
+    word = Word(choice(dictionary[1]))
     hanged_man = HangedMan()
+    make_time_delay()
+    print_dictionary_name(dictionary[0])
     while not (hanged_man.is_finished() or word.is_recognized()):
         print_progress(hanged_man.shape, word.recognition)
-        if not word.check(input('Введіть літеру: ')[0]):
+        if not word.check(input_letter()):
             hanged_man.complement()
-            print('Хибне припущення! Спробуйте ще.')
     print_results(hanged_man, word.recognition)
 
 
@@ -144,6 +155,14 @@ def make_time_delay():
     """
     print('\nЗагадаується слово...')
     sleep(2)
+
+
+def print_dictionary_name(dict_name):
+    """
+    Print chosen dictionary dict_name
+    """
+    print('Готово! Тема Вашого слова - {}\n'.format(dict_name))
+    press_enter()
     clear()
 
 
@@ -154,6 +173,14 @@ def print_progress(shape, recognition):
     clear()
     print(shape)
     print('\n{}\n'.format(recognition))
+
+
+def input_letter():
+    """
+    Input regular letter.
+    """
+    letter = input('Введіть літеру: ')
+    return letter[0].lower() if letter != '' else 'a'
 
 
 def print_results(hanged_man, recognition):

@@ -26,7 +26,7 @@ def calculate_last_digit():
     """
     #3
     """
-    numb = int(input('Випадкове число: '))
+    numb = int(input('Введіть число: '))
     print('Остання цифра: {}'.format(numb % 10))
 
 
@@ -34,7 +34,7 @@ def convert_bits():
     """
     #4
     """
-    total_bits = int(input('Випадкове число біт: '))
+    total_bits = int(input('Число біт: '))
     total_bytes = total_bits // 8
     b = total_bytes % 1024
     total_bytes //= 1024
@@ -48,15 +48,15 @@ def convert_seconds():
     """
     #5
     """
-    seconds = int(input('Випадкове число секунд: '))
-    print('{} хвилина {} секунди '.format(seconds // 60, seconds % 60))
+    seconds = int(input('Число секунд: '))
+    print('{} хв. {} сек. '.format(seconds // 60, seconds % 60))
 
 
 def determinate_time():
     """
     #6
     """
-    minutes = int(input('Випадкове число хвилин: ')) % 1440
+    minutes = int(input('Число хвилин: ')) % 1440
     print('{}:{}'.format(extend(minutes // 60), extend(minutes % 60)))
 
 

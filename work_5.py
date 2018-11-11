@@ -2,23 +2,20 @@
 Лабораторна робота №5
 ІПЗ - 12, Петраківський Данило
 """
+from functools import reduce
 
 
 def print_row():
     """
     #1
     """
-    a = int(input('Введіть А: '))
-    b = int(input('Введіть B: '))
-    if a < b:
-        printr(a, b + 1, 1)
-    else:
-        printr(a, b - 1, -1)
+    a = int(input('Введіть a: '))
+    b = int(input('Введіть b: '))
+    print(make_row(a, b + 1, 1) if a < b else make_row(a, b - 1, -1))
 
 
-def printr(a, b, step):
-    for i in range(a, b, step):
-        print(i, end=' ')
+def make_row(a, b, step):
+    return ' '.join([str(i) for i in range(a, b, step)])
 
 
 def print_odd_numbers():
@@ -26,9 +23,8 @@ def print_odd_numbers():
     #2
     """
     ab = input('Введіть a, b: ').split()
-    for i in range(int(ab[0]), int(ab[1]) + 1, 1):
-        if i % 2 == 1:
-            print(i, end=' ')
+    a = int(ab[0])
+    print(' '.join([str(i) for i in range(a if a % 2 == 1 else a + 1, int(ab[1]) + 1, 2)]))
 
 
 def calc_factorial():
@@ -36,10 +32,7 @@ def calc_factorial():
     #3
     """
     n = int(input('Введіть n: '))
-    f = 1
-    for i in range(2, n + 1, 1):
-        f *= i
-    print(f)
+    print(reduce(lambda fac, seq: fac * seq, [i for i in range(1, n + 1, 1)]))
 
 
 def draw_ladder():
@@ -47,10 +40,7 @@ def draw_ladder():
     #4
     """
     n = int(input('Введіть n: '))
-    s = ''
-    for i in range(1, n + 1, 1):
-        s += str(i)
-        print(s)
+    print('\n'.join([''.join([str(j) for j in range(1, i + 1)]) for i in range(1, n + 1)]))
 
 
 def draw_multiplication_table():
@@ -58,14 +48,13 @@ def draw_multiplication_table():
     #5
     """
     numbers = input('Введіть a, b: ').split()
-    a = int(numbers[0])
     b = int(numbers[1])
-    for i in range(a, b + 1):
-        s = ''
-        for j in range(1, b + 1):
-            mul = i * j
-            s += '{} x {} = {}{}'.format(i, j, mul, '' if j == b else (' | ' if mul >= 10 else '  | '))
-        print(s)
+    print('\n'.join([' | '.join([make_cell(i, j) for j in range(1, b + 1)]) for i in range(int(numbers[0]), b + 1)]))
+
+
+def make_cell(i, j):
+    mul = i * j
+    return '{} x {} = {}{}'.format(i, j, mul, ' ' if mul < 10 else '')
 
 
 def calc_zero_count():
@@ -73,11 +62,7 @@ def calc_zero_count():
     #6
     """
     n = input('Введіть n: ')
-    zero_count = 0
-    for d in n:
-        if d == '0':
-            zero_count += 1
-    print(zero_count)
+    print(len(list(filter(lambda d: d == '0', n))))
 
 
 def calc_sum_1():
@@ -85,11 +70,8 @@ def calc_sum_1():
     #7
     """
     n = int(input('Введіть n: '))
-    k = float(input('Введіть k: '))
-    sum_ = 0.0
-    for i in range(1, n + 1, 1):
-        sum_ += i ** k
-    print(sum_)
+    k = int(input('Введіть k: '))
+    print(sum([i ** k for i in range(1, n + 1)]))
 
 
 def calc_sum_2():
@@ -97,7 +79,4 @@ def calc_sum_2():
     #8
     """
     n = int(input('Введіть n: '))
-    sum_ = 0.0
-    for i in range(1, n + 1, 1):
-        sum_ += i ** i
-    print(sum_)
+    print(sum([i ** i for i in range(1, n + 1)]))

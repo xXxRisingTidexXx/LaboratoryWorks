@@ -9,7 +9,7 @@ def calc_fraction():
     """
     #1
     """
-    x = float(input('Введіть X: '))
+    x = float(input('Введіть х: '))
     print(format(modf(x)[0], '.4f'))
 
 
@@ -17,7 +17,7 @@ def calc_first_digit():
     """
     #2
     """
-    x = input('Введіть X: ')
+    x = str(float(input('Введіть х: ')))
     print(x[x.index('.') + 1])
 
 
@@ -25,7 +25,7 @@ def calc_formula():
     """
     #3
     """
-    x = float(input('Введіть X: '))
+    x = float(input('Введіть х: '))
     print(format(sqrt(log(4 / 3 + x, e) + 9 / 7) - e ** (-sin(1.3 * x - 0.7)), '.4f'))
 
 
@@ -47,7 +47,7 @@ def record_sound():
     v = float(input('Введіть v: '))
     d = float(input('Введіть d: '))
     t = float(input('Введіть t: '))
-    print('{} Кбайт'.format(ceil(v * d * t / 8 / 1024)))
+    print('{} Кбайт'.format(ceil(v * d * t / 8192)))
 
 
 def determinate_time_1():

@@ -77,7 +77,7 @@ def are_at_the_current_area():
     vertical = decimalize(2)
     r = decimalize(4)
     sqr_sum = decimalize(x * x + y * y)
-    print('YES' if x.compare(y) > 0 and vertical.compare(x) > 0 and sqr_sum.compare(r) > 0 else 'NO')
+    print('YES' if x.compare(y) >= 0 and vertical.compare(x) >= 0 and sqr_sum.compare(r) >= 0 else 'NO')
 
 
 def decimalize(numb):

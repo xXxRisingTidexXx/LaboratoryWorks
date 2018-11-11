@@ -49,16 +49,16 @@ def calc_percentage():
     print('{} років'.format(years))
 
 
+# noinspection PyUnusedLocal
 def calc_multiplication():
     """
     #4
     """
-    numbers = input('Введіть x, a: ').split()
-    x = int(numbers[0])
-    a = int(numbers[1])
-    m = 0
-    for i in range(1, abs(a) + 1):
-        m += abs(x)
+    xa = input('Введіть x, a: ').split()
+    x = int(xa[0])
+    a = int(xa[1])
+    absx = abs(x)
+    m = sum([absx for i in range(1, abs(a) + 1)])
     print(m if x >= 0 and a >= 0 or x < 0 and a < 0 else -m)
 
 
@@ -86,18 +86,15 @@ def calc_satisfactory_numbers():
     """
     #6
     """
-    for i in range(10000, 100000):
-        if i % 133 == 125 and i % 134 == 111:
-            print(i)
+    print(' '.join(map(lambda x: str(x), filter(lambda x: x % 133 == 125 and x % 134 == 111,
+                                                [i for i in range(10000, 100000)]))))
 
 
 def calc_armstrong_numbers():
     """
     #7
     """
-    for i in range(100, 1000):
-        if i == dsum(i):
-            print(i)
+    print(' '.join(map(lambda x: str(x), filter(lambda x: x == dsum(x), [i for i in range(100, 1000)]))))
 
 
 def dsum(n):

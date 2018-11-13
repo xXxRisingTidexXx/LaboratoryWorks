@@ -6,171 +6,112 @@ from decimal import Decimal, ROUND_HALF_EVEN
 from random import randint, uniform
 from math import sqrt
 from numpy import roll
+from re import match
 
 
+# noinspection PyUnusedLocal
 def calc_number_digits():
     """
     #1
     """
-    for i in range(5):
-        print(digest(randint(10000, 1000000)))
+    print('\n'.join([digest(randint(10000, 1000000)) for i in range(5)]))
 
 
 def digest(n):
     s = str(n)
-    sum_ = 0
-    for d in s:
-        sum_ += int(d)
-    return '{} {} {}'.format(n, len(s), sum_)
+    return '{} {} {}'.format(n, len(s), sum(map(lambda ch: int(ch), s)))
 
 
+# noinspection PyUnusedLocal
 def invert_number():
     """
     #2
     """
-    for i in range(5):
-        print(invert(randint(10000, 1000000)))
+    print('\n'.join([invert(randint(10000, 1000000)) for i in range(5)]))
 
 
 def invert(n):
-    s = str(n)[::-1]
-    for i in range(len(s)):
-        if s[i] != '0':
-            return '{} {}'.format(n, s[i:])
-    return '0 0'
+    return '{} {}'.format(n, match(r'^0*(\d+)$', str(n)[::-1]).group(1))
 
 
 def draw_power_table():
     """
     #3
     """
-    a = []
-    b = []
-    c = []
-    d = []
-    aml = 0
-    bml = 0
-    cml = 0
-    dml = 0
-    for i in range(5):
-        powers = calc_powers(randint(-128, 127))
-        a.append(powers[0])
-        aml = max(aml, len(powers[0]))
-        b.append(powers[1])
-        bml = max(bml, len(powers[1]))
-        c.append(powers[2])
-        cml = max(cml, len(powers[2]))
-        d.append(powers[3])
-        dml = max(dml, len(powers[3]))
-    for i in range(5):
-        print(expand(a[i], aml), expand(b[i], bml), expand(c[i], cml), expand(d[i], dml), sep='|')
+    print('\n'.join(map(lambda row: '|'.join(row), format_table(
+        [calc_powers(int(input('Введіть {} число: '.format(i + 1)))) for i in range(5)]
+    ))))
 
 
 def calc_powers(n):
-    a = '.1f'
-    return str(n), format(n ** 2, a), format(n ** 3, a), format(n ** 4, a)
+    t = '.1f'
+    return [str(n), format(n * n, t), format(n * n * n, t), format(n ** 4, t)]
 
 
-def expand(cell, ml):
-    return '{}{}'.format(' ' * (ml - len(cell)), cell)
+def format_table(table):
+    m = len(table)
+    n = len(table[0])
+    cell_widths = [max(map(lambda s: len(s), [table[i][j] for i in range(m)])) for j in range(n)]
+    return [['{:>{}}'.format(table[i][j], cell_widths[j]) for j in range(n)] for i in range(m)]
 
 
 def draw_average_value_table():
     """
     #4
     """
-    x = uniform(0, 100)
-    y = []
-    aa = []
-    ag = []
-    yml = 0
-    aaml = 0
-    agml = 0
-    for i in range(3):
-        ry = (uniform(0, 100))
-        y.append(format(ry))
-        yml = max(yml, len(y[i]))
-        aa.append(format((x + ry) / 2))
-        aaml = max(aaml, len(aa[i]))
-        ag.append(format(sqrt(x * ry)))
-        agml = max(agml, len(ag[i]))
-    for i in range(3):
-        print('{} {}'.format(x, expand(y[i], yml)), expand(aa[i], aaml), expand(ag[i], agml), sep='|')
+    abcd = list(map(lambda s: float(s), input('Введіть a, b, c, d: ').split()))
+    print('\n'.join(map(lambda row: '|'.join(row), format_table(
+        [[str(abcd[0]), str(abcd[1]), format((abcd[0] + abcd[1]) / 2, '.2f'), format(sqrt(abcd[0] * abcd[1]), '.5f')],
+         [str(abcd[0]), str(abcd[2]), format((abcd[0] + abcd[2]) / 2, '.2f'), format(sqrt(abcd[0] * abcd[2]), '.5f')],
+         [str(abcd[0]), str(abcd[3]), format((abcd[0] + abcd[3]) / 2, '.2f'), format(sqrt(abcd[0] * abcd[3]), '.5f')]]
+    ))))
 
 
 def draw_rectangle_table():
     """
     #5
     """
-    table = {'x1': [], 'y1': [], 'x2': [], 'y2': [], 'p': [], 's': []}
-    x1ml = 0
-    y1ml = 0
-    x2ml = 0
-    y2ml = 0
-    pml = 0
-    sml = 0
-    for i in range(3):
-        x1 = decimalize(input('Введіть x1: '))
-        y1 = decimalize(input('Введіть y1: '))
-        x2 = decimalize(input('Введіть x2: '))
-        y2 = decimalize(input('Введіть y2: '))
-        ps = calc_perimeter_and_square(x1, y1, x2, y2)
-        table['x1'].append(str(x1))
-        table['y1'].append(str(y1))
-        table['x2'].append(str(x2))
-        table['y2'].append(str(y2))
-        table['p'].append(ps[0])
-        table['s'].append(ps[1])
-        x1ml = max(x1ml, len(table['x1'][i]))
-        y1ml = max(y1ml, len(table['y1'][i]))
-        x2ml = max(x2ml, len(table['x2'][i]))
-        y2ml = max(y2ml, len(table['y2'][i]))
-        pml = max(pml, len(table['p'][i]))
-        sml = max(sml, len(table['s'][i]))
-    print('|{}x1{}'.format(' ' * ((x1ml - 1) // 2), ' ' * (x1ml - (x1ml - 1) // 2 - 2)),
-          '{}y1{}'.format(' ' * ((y1ml - 1) // 2), ' ' * (y1ml - (y1ml - 1) // 2 - 2)),
-          '{}x2{}'.format(' ' * ((x2ml - 1) // 2), ' ' * (x2ml - (x2ml - 1) // 2 - 2)),
-          '{}y2{}'.format(' ' * ((y2ml - 1) // 2), ' ' * (y2ml - (y2ml - 1) // 2 - 2)),
-          '{}p{}'.format(' ' * ((pml - 1) // 2), ' ' * (pml - (pml - 1) // 2 - 1)),
-          '{}s{}|'.format(' ' * ((sml - 1) // 2), ' ' * (sml - (sml - 1) // 2 - 1)), sep='|')
-    for i in range(3):
-        print('|{}'.format(expand(table['x1'][i], x1ml)), expand(table['y1'][i], y1ml),
-              expand(table['x2'][i], x2ml), expand(table['y2'][i], y2ml),
-              expand(table['p'][i], pml), '{}|'.format(expand(table['s'][i], sml)), sep='|')
+    print('\n'.join(map(lambda row: '|{}|'.format('|'.join(row)), add_header(format_table(
+        [calc_rectangle(input('Введіть координати {}-го прямокутника: '.format(i + 1)).split()) for i in range(3)]
+    )))))
+
+
+def calc_rectangle(coordinates):
+    dc = tuple(map(lambda s: decimalize(s), coordinates))
+    if dc[0].compare(dc[2]) == 0 or dc[1].compare(dc[3]) == 0:
+        ps = ['undefined', 'undefined']
+    else:
+        x = abs(dc[2] - dc[0])
+        y = abs(dc[3] - dc[1])
+        t = '.2f'
+        ps = [format(2 * x + 2 * y, t), format(x * y, t)]
+    return list(map(lambda d: format(d, '.1f'), dc)) + ps
 
 
 def decimalize(numb):
     return Decimal(numb).quantize(Decimal('.01'), rounding=ROUND_HALF_EVEN)
 
 
-def calc_perimeter_and_square(x1, y1, x2, y2):
-    if x1.compare(x2) == 0 or y1.compare(y2) == 0:
-        return 'undefined', 'undefined'
-    else:
-        x = abs(x2 - x1)
-        y = abs(y2 - y1)
-        return str(2 * x + 2 * y), str(x * y)
+def add_header(table):
+    captions = ['X1', 'Y1', 'X2', 'Y2', 'P', 'S']
+    table.insert(0, ['{:^{}}'.format(captions[j], len(table[0][j])) for j in range(6)])
+    return table
 
 
-def perform_right_shift():
+def right_circular_shift():
     """
     #6
     """
-    list1 = [uniform(-256, 255), uniform(-256, 255), uniform(-256, 255)]
-    list2 = [uniform(-256, 255), uniform(-256, 255), uniform(-256, 255)]
-    print(list1)
-    print(roll(list1, 1))
-    print(list2)
-    print(roll(list2, 1))
+    for i in range(2):
+        print(' '.join(roll(input('Введіть a, b, c: ').split(), 1)))
 
 
-def perform_left_shift():
+def left_circular_shift():
     """
     #7
     """
-    list1 = [uniform(-256, 255), uniform(-256, 255), uniform(-256, 255)]
-    list2 = [uniform(-256, 255), uniform(-256, 255), uniform(-256, 255)]
-    print(list1)
-    print(roll(list1, -1))
-    print(list2)
-    print(roll(list2, -1))
+    for i in range(2):
+        print(' '.join(roll(input('Введіть a, b, c: ').split(), -1)))
+
+
+left_circular_shift()

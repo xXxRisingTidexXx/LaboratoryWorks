@@ -2,6 +2,7 @@
 Лабораторна робота №8
 ІПЗ - 12, Петраківський Данило
 """
+from functools import reduce
 from random import randint, uniform
 from math import pi
 
@@ -104,7 +105,4 @@ def calc_double_factorial():
 
 
 def computef(n):
-    f = 1
-    for i in range(1 if n % 2 == 1 else 2, n + 1, 2):
-        f *= i
-    return f
+    return reduce(lambda x, y: x * y, [i for i in range(1 if n % 2 == 1 else 2, n + 1, 2)])

@@ -25,9 +25,9 @@ def input_tricky_text():
     """
     #3
     """
-    s1 = input('Суб\'єкт: ')
-    s2 = input('Дія: ')
-    s3 = input('Об\'єкт: ')
+    s1 = input('Введіть s1: ')
+    s2 = input('Введіть s2: ')
+    s3 = input('Введіть s3: ')
     s1_length = len(s1)
     s2_length = len(s2)
     print('{}\n{}\n{}'.format(s1, ' ' * s1_length + s2, ' ' * (s1_length + s2_length) + s3))

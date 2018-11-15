@@ -2,55 +2,51 @@
 Лабораторна робота №9
 ІПЗ - 12, Петраківський Данило
 """
-from random import randint, uniform, sample
-
-
-standard = '.3f'
+STANDARD = '.3f'
 
 
 def calc_factorial():
     """
     #1
     """
-    for i in range(5):
-        n = randint(1, 20)
-        print('n: {}  n!: {}'.format(n, fac(n)))
+    n = [int(input('Введіть n[{}]: '.format(i + 1))) for i in range(5)]
+    print('\n'.join(map(lambda ni: 'n: {}  n!: {}'.format(ni, factorial(ni)), n)))
 
 
-def fac(n):
-    return 1 if n == 1 else n * fac(n - 1)
+def factorial(n):
+    return 1 if n == 1 else n * factorial(n - 1)
 
 
 def calc_double_factorial():
     """
     #2
     """
-    for i in range(5):
-        n = randint(1, 20)
-        print('n: {}  n!!: {}'.format(n, dfac(n)))
+    n = [int(input('Введіть n[{}]: '.format(i + 1))) for i in range(5)]
+    print('\n'.join(map(lambda ni: 'n: {}  n!!: {}'.format(ni, dfactorial(ni)), n)))
 
 
-def dfac(n):
-    return 1 if n == 1 else 2 if n == 2 else n * dfac(n - 2)
+def dfactorial(n):
+    return 1 if n == 1 else 2 if n == 2 else n * dfactorial(n - 2)
 
 
 def calc_combinations():
     """
     #3
     """
-    n = randint(1, 20)
-    for i in range(5):
-        k = randint(1, n)
-        c = comb(n, k)
-        print('n: {}  k: {}  C(n, k): {}  recursive calls: {}'.format(n, k, c[0], c[1]))
+    n = int(input('Введіть n: '))
+    k = [int(input('Введіть k[{}]: '.format(i + 1))) for i in range(5)]
+    print('\n'.join(map(lambda ki: 'C({}, {}): {}'.format(
+        n, ki, ', рекурсивних викликів: '.join(map(lambda c: str(c), combination(n, ki)))
+    ), k)))
 
 
-def comb(n, k, i=0):
+def combination(n, k, i=0):
+    i += 1
     if k == 0 or k == n:
-        return 1, i + 1
+        return 1, i
     else:
-        c1 = comb(n - 1, k, i + 1)
-        c2 = comb(n - 1, k - 1, i + 1)
+        c1 = combination(n - 1, k, i)
+        c2 = combination(n - 1, k - 1, i)
         return c1[0] + c2[0], c1[1] + c2[1]
 
 
@@ -58,24 +54,24 @@ def calc_digital_sum():
     """
     #4
     """
-    for i in range(5):
-        k = randint(-2048, 2047)
-        print('k: {}  digital sum: {}'.format(k, dsum(abs(k), 0)))
+    k = [int(input('Введіть k[{}]: '.format(i + 1))) for i in range(5)]
+    print('\n'.join(map(lambda ki: 'k: {}, сума цифр: {}'.format(ki, dsum(abs(ki))), k)))
 
 
-def dsum(k, s):
+def dsum(k, s=0):
     return s + k % 10 if k // 10 == 0 else s + k % 10 + dsum(k // 10, s)
 
 
-def calc_sqrt_approximately():
+def calc_root_approximately():
     """
     #5
     """
-    x = uniform(0.01, 4000)
-    k = randint(2, 10)
-    for i in range(5):
-        n = randint(200, 400)
-        print('x: {0}  k: {1}  n: {2}  {1}-root: {3}'.format(format(x, standard), k, n, format(y(x, n, k), standard)))
+    x = float(input('Введіть abcdi: '))
+    k = int(input('Введіть k: '))
+    n = [int(input('Введіть n[{}]: '.format(i + 1))) for i in range(5)]
+    print('\n'.join(map(
+        lambda ni: '{}-root({}, {}): {}'.format(k, format(x, STANDARD), ni, format(y(x, ni, k), STANDARD)), n
+    )))
 
 
 def y(x, k, n):
@@ -90,13 +86,8 @@ def calc_gcd():
     """
     #6
     """
-    a = randint(1, 500)
-    b = randint(1, 500)
-    c = randint(1, 500)
-    d = randint(1, 500)
-    print('gcd({}, {}): {}'.format(a, b, gcd(a, b)))
-    print('gcd({}, {}): {}'.format(a, c, gcd(a, c)))
-    print('gcd({}, {}): {}'.format(a, d, gcd(a, d)))
+    abcd = list(map(lambda x: int(x), input('Введіть a, b, c, d: ').split()))
+    print('\n'.join(map(lambda abcdi: 'gcd({}, {}): {}'.format(abcd[0], abcdi, gcd(abcd[0], abcdi)), abcd[1:])))
 
 
 def gcd(a, b):
@@ -107,36 +98,26 @@ def calc_max():
     """
     #7
     """
-    a = randint(1, 21)
-    b = randint(1, 21)
-    c = randint(1, 21)
-    n = randint(1, 11)
-    a1 = sample(range(-128, 128), n * a)
-    a2 = sample(range(-128, 128), n * b)
-    a3 = sample(range(-128, 128), n * c)
-    print('n: {}  a: {}  max: {}'.format(n, a, amax(a1, a1[0])))
-    print('n: {}  b: {}  max: {}'.format(n, b, amax(a2, a2[0])))
-    print('n: {}  c: {}  max: {}'.format(n, c, amax(a3, a3[0])))
-
-
-def amax(a, m):
-    return m if len(a) == 0 else amax(a[1:], max(m, a[0]))
+    n = list(map(lambda ni: int(ni), input('Введіть na, nb, nc: ').split()))
+    arrays = [[int(input('Введіть arrays[{}][{}]: '.format(i + 1, j + 1))) for j in range(n[i])] for i in range(3)]
+    print('\n'.join(map(lambda ai: 'max: {}'.format(max(ai)), arrays)))
 
 
 def calc_fibonacci():
     """
     #8
     """
-    for i in range(5):
-        n = randint(1, 21)
-        f = fibo(n)
-        print('n: {0}  f({0}): {1}  recursive calls: {2}'.format(n, f[0], f[1]))
+    n = [int(input('Введіть n[{}]: '.format(i + 1))) for i in range(5)]
+    print('\n'.join(map(
+        lambda ni: 'F({}): {}'.format(ni, ', рекурсивних викликів: '.join(map(lambda f: str(f), fibonacci(ni)))), n
+    )))
 
 
-def fibo(n, i=0):
+def fibonacci(n, i=0):
+    i += 1
     if n == 1 or n == 2:
-        return 1, i + 1
+        return 1, i
     else:
-        f1 = fibo(n - 1, i + 1)
-        f2 = fibo(n - 2, i + 1)
+        f1 = fibonacci(n - 1, i)
+        f2 = fibonacci(n - 2, i)
         return f1[0] + f2[0], f1[1] + f2[1]

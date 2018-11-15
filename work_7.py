@@ -3,10 +3,10 @@
 ІПЗ - 12, Петраківський Данило
 """
 from decimal import Decimal, ROUND_HALF_EVEN
-from random import randint, uniform
 from math import sqrt
-from numpy import roll
+from random import randint
 from re import match
+from numpy import roll
 
 
 # noinspection PyUnusedLocal
@@ -112,6 +112,3 @@ def left_circular_shift():
     """
     for i in range(2):
         print(' '.join(roll(input('Введіть a, b, c: ').split(), -1)))
-
-
-left_circular_shift()

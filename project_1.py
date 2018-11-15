@@ -43,16 +43,10 @@ NO = 'ні'
 class Word:
     """
     Word implementation, which stands for word choice and recognition.
-
-    >>> Word().choice != ''
-    True
     """
-    choice = None
-    letter_index = 0
-    recognition = None
-
     def __init__(self, chosen_word):
         self.choice = chosen_word
+        self.letter_index = 0
         self.recognition = '_' * len(chosen_word)
 
     def is_recognized(self):
@@ -76,12 +70,10 @@ class Word:
 class HangedMan:
     """
     Hanged man class, which stands for shape depicting and word recognition process display.
-
-    >>> HangedMan().shape != ''
-    True
     """
-    index = 0
-    shape = HANGED_MEN[index]
+    def __init__(self):
+        self.index = 0
+        self.shape = HANGED_MEN[self.index]
 
     def is_finished(self):
         """
@@ -100,11 +92,6 @@ class HangedMan:
 def start():
     """
     Main function which is program's entry point.
-
-    >>> len(HANGED_MEN) >= 2
-    True
-    >>> len(DICTIONARIES) >= 1
-    True
     """
     clear()
     print_intro()

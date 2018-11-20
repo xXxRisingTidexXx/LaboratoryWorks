@@ -10,8 +10,8 @@ def transform_1():
     """
     n = int(input('Введіть n: '))
     s = input('Введіть s: ')
-    s_length = len(s)
-    print(s[s_length - n::] if s_length >= n else '.' * (n - s_length) + s)
+    slen = len(s)
+    print(s[slen - n::] if slen >= n else '.' * (n - slen) + s)
 
 
 def transform_2():
@@ -63,9 +63,10 @@ def encrypt_1():
 
 
 def chshift(ch, shift=1):
+    asize = 26
     encr = ord(ch) + shift
-    return chr(encr) if encr <= 90 else chr(encr - 26) if ch.isupper() \
-        else (chr(encr) if encr <= 122 else chr(encr - 26))
+    return chr(encr) if encr <= 90 else chr(encr - asize) if ch.isupper() \
+        else (chr(encr) if encr <= 122 else chr(encr - asize))
 
 
 def encrypt_2():

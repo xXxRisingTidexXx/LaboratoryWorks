@@ -2,44 +2,37 @@
 Лабораторна робота №10
 ІПЗ - 12, Петраківський Данило
 """
+from re import compile
 
-
-standard = '.3f'
+STANDARD = '.3f'
 
 
 def make_snapshots():
     """
     #1
     """
-    name = input('Введіть ім\'я: ')
-    name_length = len(name)
-    print(name[2])
-    print(name[name_length - 2])
-    print(name[:5])
-    print(name[:name_length - 2])
-    print(name[::2])
-    print(name[1::2])
-    print(name[::-1])
-    print(name[::-2])
-    print(name_length)
+    s = input('Введіть s: ')
+    slen = len(s)
+    print(s[2])
+    print(s[slen - 2])
+    print(s[:5])
+    print(s[:slen - 2])
+    print(s[::2])
+    print(s[1::2])
+    print(s[::-1])
+    print(s[::-2])
+    print(slen)
 
 
 def trim():
     """
     #2
     """
-    lexemes = input('Введіть речення: ').replace('    ', ' '). replace('   ', ' ').replace('  ', ' ').split()
-    word_count = 0
-    for lexeme in lexemes:
-        word_count += check_lexeme(lexeme)
-    print(word_count)
-
-
-def check_lexeme(lexeme):
-    for c in lexeme:
-        if c.isalpha():
-            return 1
-    return 0
+    pattern = compile(r'[A-Za-z]+')
+    print(len(list(filter(
+        lambda w: len(pattern.findall(w)) > 0,
+        input('Введіть речення: ').replace('    ', ' '). replace('   ', ' ').replace('  ', ' ').split()
+    ))))
 
 
 def swap_name_and_surname():
@@ -55,8 +48,8 @@ def divide_name():
     #4
     """
     name = input('Введіть ім\'я: ')
-    name_length = len(name)
-    half = name[:name_length // 2 + name_length % 2]
+    nlen = len(name)
+    half = name[:nlen // 2 + nlen % 2]
     print(name.replace(half, ''), half, sep='')
 
 
@@ -65,10 +58,7 @@ def remove_third_chars():
     #5
     """
     text = 'In the hole in the ground there lived a hobbit.'
-    new_text = ''
-    for i in range(len(text)):
-        new_text += '' if i % 3 == 0 else text[i]
-    print(new_text)
+    print(''.join(['' if i % 3 == 0 else text[i] for i in range(1, len(text))]))
 
 
 def format_full_name():
@@ -83,16 +73,13 @@ def calc_expression():
     """
     #7
     """
-    lex = input('Введіть вираз: ').split()
+    exp = input('Введіть вираз: ').split()
     ops = {'*': lambda x, y: float(x) * float(y), '/': lambda x, y: float(x) / float(y),
            '+': lambda x, y: float(x) + float(y), '-': lambda x, y: float(x) - float(y)}
-    priority = is_prioritized(lex[1])
-    if priority or not (priority or is_prioritized(lex[3])):
-        res = ops[lex[3]](ops[lex[1]](lex[0], lex[2]), lex[4])
-    else:
-        res = ops[lex[1]](lex[0], ops[lex[3]](lex[2], lex[4]))
-    print(format(res, standard))
+    print(format(ops[exp[1]](exp[0], ops[exp[3]](exp[2], exp[4]))
+                 if not checkop(exp[1]) and checkop(exp[3]) else
+                 ops[exp[3]](ops[exp[1]](exp[0], exp[2]), exp[4]), STANDARD))
 
 
-def is_prioritized(operation):
+def checkop(operation):
     return operation == '*' or operation == '/'

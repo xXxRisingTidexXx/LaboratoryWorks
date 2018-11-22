@@ -2,6 +2,7 @@
 Лабораторна робота №11
 ІПЗ - 12, Петраківський Данило
 """
+from re import match
 
 
 def transform_1():
@@ -30,12 +31,7 @@ def extract_word():
     #3
     """
     s = input('Введіть s: ')
-    if s.count(' ') <= 1:
-        print('')
-    else:
-        s = s[s.index(' '):]
-        print(s)
-        print(s[:s.index(' ') + 1])
+    print('' if s.count(' ') <= 1 else match(r'\S+ (\S+) \S+', s).groups()[0])
 
 
 def extract_filename():
@@ -63,16 +59,14 @@ def encrypt_1():
 
 
 def chshift(ch, shift=1):
-    asize = 26
-    encr = ord(ch) + shift
-    return chr(encr) if encr <= 90 else chr(encr - asize) if ch.isupper() \
-        else (chr(encr) if encr <= 122 else chr(encr - asize))
+    code = ord(ch) + shift
+    return chr(code) if ch.isupper() and code <= 90 or ch.islower() and code <= 122 else chr(code - 26)
 
 
 def encrypt_2():
     """
     #7
     """
-    text = input('Введіть текст: ')
     k = int(input('Введіть k: '))
+    text = input('Введіть текст: ')
     print(''.join([chshift(ch, shift=k) if ch.isalpha() else ch for ch in text]))

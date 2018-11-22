@@ -4,65 +4,69 @@
 """
 from decimal import Decimal, ROUND_HALF_EVEN
 
+STANDARD = '0.3f'
+
 
 def swap_elements():
     """
     #1
     """
-    a = input('Введіть масив: ').split()
+    n = int(input('Введіть n: '))
+    a = [input('a[{}]: '.format(i + 1)) for i in range(n)]
     for i in range(1, len(a), 2):
         buffer = a[i - 1]
         a[i - 1] = a[i]
         a[i] = buffer
-    print(a)
+    print(' '.join(a))
 
 
 def reverse_list():
     """
     #2
     """
-    a = input('Введіть масив: ').split()
-    print(a[::-1])
+    n = int(input('Введіть n: '))
+    print(' '.join([input('a[{}]: '.format(i + 1)) for i in range(n)][::-1]))
 
 
 def nullify_elements():
     """
     #3
     """
-
     n = int(input('Введіть n: '))
-    a = [float(input('a[{}]: '.format(i))) for i in range(n)]
+    a = [float(input('a[{}]: '.format(i + 1))) for i in range(n)]
     for i in range(a.index(min(a)) + 1, a.index(max(a))):
         a[i] = 0
-    print(a)
+    print(' '.join(map(lambda x: format(x, STANDARD), a)))
 
 
 def remove_current_elements():
     """
     #4
     """
-    a = input('Ввведіть масив: ').split()
-    k = int(input('Введіть k: ')) - 1
-    m = int(input('Введіть m: ')) - 1
-    print(a[:k] + a[m + 1:])
+    n = int(input('Введіть n: '))
+    k = int(input('Введіть k: '))
+    m = int(input('Введіть m: '))
+    a = [input('a[{}]: '.format(i + 1)) for i in range(n)]
+    print(' '.join(a[:k - 1] + a[m:]))
 
 
 def remove_odd_indexed_elements():
     """
     #5
     """
-    a = input('Ввведіть масив: ').split()
-    print(a[::2])
+    n = int(input('Введіть n: '))
+    print(' '.join([input('a[{}]: '.format(i + 1)) for i in range(n)][::2]))
 
 
 def add_element():
     """
     #6
     """
-    a = input('Ввведіть масив: ').split()
-    k = int(input('Ввведіть k: ')) - 1
-    a.insert(k, '0')
-    print(a)
+    n = int(input('Введіть n: '))
+    k = int(input('Ввведіть k: '))
+    a = [input('a[{}]: '.format(i + 1)) for i in range(n)]
+    a.insert(k - 1, '0')
+    print(' '.join(a))
 
 
 def sort_list():
@@ -70,8 +74,9 @@ def sort_list():
     #7
     """
     n = int(input('Ввведіть n: '))
-    a = [decimalize(input('a[{}]: '.format(i))) for i in range(n)]
-    print(sort(a))
+    print(' '.join(map(lambda x: format(x, STANDARD), sort(
+        [decimalize(input('a[{}]: '.format(i + 1))) for i in range(n)]
+    ))))
 
 
 def decimalize(numb):
@@ -95,6 +100,7 @@ def merge(a, b):
             i += 1
         else:
             c.append(a[i])
+            c.append(b[j])
             i += 1
             j += 1
     if i != len(a):

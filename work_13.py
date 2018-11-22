@@ -2,7 +2,7 @@
 Лабораторна робота №13
 ІПЗ - 12, Петраківський Данило
 """
-from decimal import Decimal, ROUND_HALF_EVEN
+STANDARD = '.3f'
 
 
 def combine_lists():
@@ -10,27 +10,27 @@ def combine_lists():
     #1
     """
     n = int(input('Введіть n: '))
-    a = [int(input('a[{}]: '.format(i))) for i in range(n)]
-    b = [int(input('b[{}]: '.format(i))) for i in range(n)]
-    c = [max(a[i], b[i]) for i in range(n)]
-    print(c)
+    a = [float(input('a[{}]: '.format(i + 1))) for i in range(n)]
+    b = [float(input('b[{}]: '.format(i + 1))) for i in range(n)]
+    print(' '.join(map(lambda x: str(x), [max(a[i], b[i]) for i in range(n)])))
 
 
 def filter_elements():
     """
     #2
     """
-    a = input('Введіть масив: ').split()
-    b = a[::3]
-    print('b.length: {}  b: {}'.format(len(b), b))
+    n = int(input('Введіть n: '))
+    b = [input('a[{}]: '.format(i + 1)) for i in range(n)][::3]
+    print('len(b): {}  b: {}'.format(len(b), ' '.join(b)))
 
 
 def shuffle_elements():
     """
     #3
     """
-    a = input('Введіть масив: ').split()
-    print(a[::2] + a[1::2])
+    n = int(input('Введіть n: '))
+    a = [input('a[{}]: '.format(i + 1)) for i in range(n)]
+    print(' '.join(a[::2] + a[1::2]))
 
 
 def supply_list():
@@ -38,11 +38,11 @@ def supply_list():
     #4
     """
     n = int(input('Введіть n: '))
-    a = [int(input('a[{}]: '.format(i))) for i in range(n)]
+    a = [float(input('a[{}]: '.format(i + 1))) for i in range(n)]
     b = [a[0]]
     for i in range(1, n):
         b.append((i * b[i - 1] + a[i]) / (i + 1))
-    print(b)
+    print(' '.join(map(lambda x: format(x, STANDARD), b)))
 
 
 def allocate_elements():
@@ -50,42 +50,33 @@ def allocate_elements():
     #5
     """
     n = int(input('Введіть n: '))
-    b = []
-    c = []
-    for i in range(n):
-        element = decimalize(input('a[{}]: '.format(i)))
-        if element.compare(0) >= 0:
-            b.append(element)
-        else:
-            c.append(element)
-    print('b.length: {}  b: {}'.format(len(b), b))
-    print('c.length: {}  c: {}'.format(len(c), c))
-
-
-def decimalize(numb):
-    return Decimal(numb).quantize(Decimal('.01'), rounding=ROUND_HALF_EVEN)
+    a = [float(input('a[{}]: '.format(i + 1))) for i in range(n)]
+    b = list(filter(lambda x: x >= 0, a))
+    c = list(filter(lambda x: x < 0, a))
+    print('len(b): {}  b: {}'.format(len(b), ' '.join(map(lambda x: format(x, STANDARD), b))))
+    print('len(c): {}  c: {}'.format(len(c), ' '.join(map(lambda x: format(x, STANDARD), c))))
 
 
 def merge_two_lists():
     """
     #6
     """
-    a = [-5, 0, 34, 37, 87]
-    b = [-34, -7, -2, 0, 21]
-    print(merge(a, b))
+    a = [int(input('Введіть a[{}]: '.format(i + 1))) for i in range(5)]
+    b = [int(input('Введіть b[{}]: '.format(i + 1))) for i in range(5)]
+    print(' '.join(map(lambda x: str(x), merge(a, b))))
 
 
 # noinspection PyPep8Naming
-def CASC(x, y):
+def ASC(x, y):
     return x > y
 
 
 # noinspection PyPep8Naming
-def CDESC(x, y):
+def DESC(x, y):
     return x < y
 
 
-def merge(a, b, order=CASC):
+def merge(a, b, order=ASC):
     c = []
     i = 0
     j = 0
@@ -98,6 +89,7 @@ def merge(a, b, order=CASC):
             i += 1
         else:
             c.append(a[i])
+            c.append(b[j])
             i += 1
             j += 1
     if i != len(a):
@@ -112,9 +104,9 @@ def merge_three_lists():
     #7
     """
     na = int(input('Введіть na: '))
-    a = [int(input('a[{}]: '.format(i))) for i in range(na)]
     nb = int(input('Введіть nb: '))
-    b = [int(input('b[{}]: '.format(i))) for i in range(nb)]
     nc = int(input('Введіть nc: '))
-    c = [int(input('c[{}]: '.format(i))) for i in range(nc)]
-    print(merge(merge(a, b, order=CDESC), c, order=CDESC))
+    a = [int(input('a[{}]: '.format(i + 1))) for i in range(na)]
+    b = [int(input('b[{}]: '.format(i + 1))) for i in range(nb)]
+    c = [int(input('c[{}]: '.format(i + 1))) for i in range(nc)]
+    print(' '.join(map(lambda x: str(x), merge(merge(a, b, order=DESC), c, order=DESC))))

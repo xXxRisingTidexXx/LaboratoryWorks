@@ -4,9 +4,9 @@
 """
 from struct import unpack, pack
 
-ibuffer = 4
-encoding = 'ascii'
-cbuffer = 1
+IBUFFER = 4
+ENCODING = 'ascii'
+CBUFFER = 1
 
 
 def collect_integer_files():
@@ -22,8 +22,8 @@ def collect_integer_files():
         bytes_1 = file_1.read()
         bytes_2 = file_2.read()
         bytes_3 = file_3.read()
-        for i in range(0, len(bytes_1), ibuffer):
-            s = slice(i, i + ibuffer)
+        for i in range(0, len(bytes_1), IBUFFER):
+            s = slice(i, i + IBUFFER)
             main_file.write(bytes_1[s])
             main_file.write(bytes_2[s])
             main_file.write(bytes_3[s])
@@ -39,8 +39,8 @@ def collect_and_sort_files():
     with open(filename_1, 'rb') as file_1, open(filename_2, 'rb') as file_2, open(main_filename, 'wb') as main_file:
         bytes_1 = file_1.read()
         bytes_2 = file_2.read()
-        floats = [unpack('f', bytes_1[slice(i, i + ibuffer)])[0] for i in range(0, len(bytes_1), ibuffer)]
-        floats.extend([unpack('f', bytes_2[slice(i, i + ibuffer)])[0] for i in range(0, len(bytes_2), ibuffer)])
+        floats = [unpack('f', bytes_1[slice(i, i + IBUFFER)])[0] for i in range(0, len(bytes_1), IBUFFER)]
+        floats.extend([unpack('f', bytes_2[slice(i, i + IBUFFER)])[0] for i in range(0, len(bytes_2), IBUFFER)])
         floats.sort()
         for f in floats:
             main_file.write(pack('f', f))
@@ -60,7 +60,7 @@ def archive_files():
         for filename in filenames:
             with open(filename, 'rb') as file:
                 byte_list = file.read()
-                lengths.append(len(byte_list) // ibuffer)
+                lengths.append(len(byte_list) // IBUFFER)
                 byte_lists.append(byte_list)
         for length in lengths:
             archives.write(pack('i', length))
@@ -76,15 +76,15 @@ def restore_file():
     n = int(input('Введіть n: '))
     archive_name = input('Введіть ім\'я архіву: ')
     with open(archive_name, 'rb') as archives, open(destination_name, 'wb') as destination:
-        total = unpack('i', archives.read(ibuffer))[0]
+        total = unpack('i', archives.read(IBUFFER))[0]
         if n <= total:
             offset = 0
             for i in range(n - 1):
-                offset += unpack('i', archives.read(ibuffer))[0]
-            length = unpack('i', archives.read(ibuffer))[0]
-            archives.seek((1 + total + offset) * ibuffer)
+                offset += unpack('i', archives.read(IBUFFER))[0]
+            length = unpack('i', archives.read(IBUFFER))[0]
+            archives.seek((1 + total + offset) * IBUFFER)
             for i in range(length):
-                destination.write(archives.read(ibuffer))
+                destination.write(archives.read(IBUFFER))
 
 
 # noinspection PyUnusedLocal
@@ -95,10 +95,10 @@ def collect_float_files():
     destination_name = input('Введіть ім\'я цільового файлу: ')
     archive_name = input('Введіть ім\'я архіву: ')
     with open(archive_name, 'rb') as archives, open(destination_name, 'wb') as destination:
-        total = unpack('i', archives.read(ibuffer))[0]
-        lengths = [unpack('i', archives.read(ibuffer))[0] for i in range(total)]
+        total = unpack('i', archives.read(IBUFFER))[0]
+        lengths = [unpack('i', archives.read(IBUFFER))[0] for i in range(total)]
         for length in lengths:
-            destination.write(pack('f', sum([unpack('i', archives.read(ibuffer))[0] for i in range(length)]) / length))
+            destination.write(pack('f', sum([unpack('i', archives.read(IBUFFER))[0] for i in range(length)]) / length))
 
 
 def archive_integer_file():
@@ -112,7 +112,7 @@ def archive_integer_file():
         for filename in filenames:
             with open(filename, 'rb') as file:
                 byte_list = file.read()
-                archives.write(pack('i', len(byte_list) // ibuffer))
+                archives.write(pack('i', len(byte_list) // IBUFFER))
                 archives.write(byte_list)
 
 
@@ -123,12 +123,12 @@ def sort_character_file():
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'r+b') as file:
         byte_list = file.read()
-        chars = [unpack('c', byte_list[slice(i, i + cbuffer)])[0].decode(encoding)
-                 for i in range(0, len(byte_list), cbuffer)]
+        chars = [unpack('c', byte_list[slice(i, i + CBUFFER)])[0].decode(ENCODING)
+                 for i in range(0, len(byte_list), CBUFFER)]
         chars.sort()
         clear(file)
         for char in chars:
-            file.write(pack('c', char.encode(encoding)))
+            file.write(pack('c', char.encode(ENCODING)))
 
 
 def clear(file):

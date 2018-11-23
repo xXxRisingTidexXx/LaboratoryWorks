@@ -4,7 +4,7 @@
 """
 from struct import unpack, pack
 
-buffer = 4
+BUFFER = 4
 
 
 def write_squares():
@@ -15,8 +15,8 @@ def write_squares():
     with open(filename, 'r+b') as file:
         byte_list = file.read()
         clear(file)
-        for i in range(0, len(byte_list), buffer):
-            num = unpack('f', byte_list[slice(i, i + buffer)])[0]
+        for i in range(0, len(byte_list), BUFFER):
+            num = unpack('f', byte_list[slice(i, i + BUFFER)])[0]
             file.write(pack('f', num * num))
 
 
@@ -34,15 +34,15 @@ def rearrange_elements():
         byte_list = file.read()
         clear(file)
         i = 0
-        j = len(byte_list) // buffer - 1
+        j = len(byte_list) // BUFFER - 1
         while j - i > 1:
-            file.write(byte_list[slice(i * buffer, (i + 1) * buffer)])
-            file.write(byte_list[slice(j * buffer, (j + 1) * buffer)])
+            file.write(byte_list[slice(i * BUFFER, (i + 1) * BUFFER)])
+            file.write(byte_list[slice(j * BUFFER, (j + 1) * BUFFER)])
             i += 1
             j -= 1
-        file.write(byte_list[slice(i * buffer, (i + 1) * buffer)])
+        file.write(byte_list[slice(i * BUFFER, (i + 1) * BUFFER)])
         if j > i:
-            file.write(byte_list[slice(j * buffer, (j + 1) * buffer)])
+            file.write(byte_list[slice(j * BUFFER, (j + 1) * BUFFER)])
 
 
 def copy():
@@ -105,8 +105,8 @@ def delete_data():
         byte_list = file.read()
         clear(file)
         length = len(byte_list)
-        for i in range(length // 2, length, buffer):
-            file.write(byte_list[slice(i, i + buffer)])
+        for i in range(length // 2, length, BUFFER):
+            file.write(byte_list[slice(i, i + BUFFER)])
 
 
 def double_contents():

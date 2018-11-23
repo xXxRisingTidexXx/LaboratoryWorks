@@ -6,7 +6,7 @@ from struct import unpack, pack
 from math import sqrt
 from os import stat
 
-buffer = 4
+BUFFER = 4
 
 
 def get_element_1():
@@ -17,8 +17,8 @@ def get_element_1():
     j = int(input('Введіть j: ')) - 1
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'rb') as file:
-        file.seek((i * unpack('i', file.read(buffer))[0] + j) * buffer, 1)
-        print(unpack('f', file.read(buffer))[0])
+        file.seek((i * unpack('i', file.read(BUFFER))[0] + j) * BUFFER, 1)
+        print(unpack('f', file.read(BUFFER))[0])
 
 
 def get_element_2():
@@ -30,12 +30,12 @@ def get_element_2():
     j = int(input('Введіть j: ')) - 1
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'rb') as file:
-        file.seek((i * get_square_matrix_size(filename) + j) * buffer)
-        print(unpack('f', file.read(buffer))[0])
+        file.seek((i * get_square_matrix_size(filename) + j) * BUFFER)
+        print(unpack('f', file.read(BUFFER))[0])
 
 
 def get_square_matrix_size(filename):
-    return int(sqrt(stat(filename).st_size / buffer))
+    return int(sqrt(stat(filename).st_size / BUFFER))
 
 
 # noinspection PyUnusedLocal
@@ -46,7 +46,7 @@ def transpose_matrix():
     filename = input('Введіть ім\'я файлу: ')
     with open(filename, 'r+b') as file:
         m = get_square_matrix_size(filename)
-        matrix = [[file.read(buffer) for j in range(m)] for i in range(m)]
+        matrix = [[file.read(BUFFER) for j in range(m)] for i in range(m)]
         clear(file)
         for i in range(m):
             for j in range(m):
@@ -68,8 +68,8 @@ def add_matrices():
 
 def combine(filename_1, filename_2, filename_3, combiner):
     with open(filename_1, 'rb') as file_1, open(filename_2, 'rb') as file_2, open(filename_3, 'wb') as file_3:
-        for i in range(0, stat(filename_1).st_size, buffer):
-            file_3.write(pack('f', combiner(unpack('f', file_1.read(buffer))[0], unpack('f', file_2.read(buffer))[0])))
+        for i in range(0, stat(filename_1).st_size, BUFFER):
+            file_3.write(pack('f', combiner(unpack('f', file_1.read(BUFFER))[0], unpack('f', file_2.read(BUFFER))[0])))
 
 
 def subtract_matrices():
@@ -90,8 +90,8 @@ def multiply_matrices():
     filename_3 = input('Введіть ім\'я 3 файлу: ')
     with open(filename_1, 'rb') as file_1, open(filename_2, 'rb') as file_2, open(filename_3, 'wb') as file_3:
         m = get_square_matrix_size(filename_1)
-        matrix_1 = [[unpack('f', file_1.read(buffer))[0] for j in range(m)] for i in range(m)]
-        matrix_2 = [[unpack('f', file_2.read(buffer))[0] for j in range(m)] for i in range(m)]
+        matrix_1 = [[unpack('f', file_1.read(BUFFER))[0] for j in range(m)] for i in range(m)]
+        matrix_2 = [[unpack('f', file_2.read(BUFFER))[0] for j in range(m)] for i in range(m)]
         for i in range(m):
             for j in range(m):
                 element = 0

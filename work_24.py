@@ -4,7 +4,7 @@
 """
 from re import compile
 
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
+ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 
 
 def create_asterisk_file():
@@ -25,7 +25,7 @@ def create_latin_letter_file():
     filename = input('Введіть ім\'я файлу: ')
     n = int(input('Введіть n: '))
     with open(filename, 'w') as file:
-        file.write('\n'.join([alphabet[:i + 1] for i in range(n)]))
+        file.write('\n'.join([ALPHABET[:i + 1] for i in range(n)]))
 
 
 def create_mixed_file():
@@ -35,7 +35,7 @@ def create_mixed_file():
     filename = input('Введіть ім\'я файлу: ')
     n = int(input('Введіть n: '))
     with open(filename, 'w') as file:
-        file.write('\n'.join([alphabet[:i + 1] + '*' * (n - i - 1) for i in range(n)]))
+        file.write('\n'.join([ALPHABET[:i + 1] + '*' * (n - i - 1) for i in range(n)]))
 
 
 def get_char_and_line_count():

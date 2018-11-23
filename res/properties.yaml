@@ -1,0 +1,46 @@
+tk:
+  title: Ping-pong
+  resizable:
+    - 0
+    - 0
+  wm_attributes:
+    - -topmost
+    - 1
+canvas:
+  width: 1000
+  height: 600
+  bd: 0
+  highlightthickness: 0
+ball:
+  color: red
+  x1: 10
+  y1: 10
+  x2: 25
+  y2: 25
+  x0: 455
+  y0: 170
+  dx:
+    - -3
+    - -2
+    - -1
+    - 1
+    - 2
+    - 3
+  dy:
+    - -3
+    - -2
+    - -1
+paddle:
+  color: blue
+  x1: 0
+  y1: 0
+  x2: 100
+  y2: 10
+  x0: 200
+  y0: 300
+  dxl: -2
+  dxr: 2
+  left_arrow: <KeyPress-Left>
+  right_arrow: <KeyPress-Right>
+game:
+  delay: 0.02

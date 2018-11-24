@@ -6,6 +6,7 @@ tk:
   wm_attributes:
     - -topmost
     - 1
+  shift_escape: <Shift-Escape>
 canvas:
   width: 1000
   height: 600
@@ -19,10 +20,18 @@ paddle:
   color: blue
   x0: 200
   y0: 400
-  dxl: -2
-  dxr: 2
-  left_arrow: <KeyPress-Left>
-  right_arrow: <KeyPress-Right>
+  dxl: -4
+  dxr: 4
+  left_arrow: <Key-Left>
+  right_arrow: <Key-Right>
+abyss:
+  x1: 0
+  y1: 0
+  x2: 1000
+  y2: 80
+  color: black
+  x0: 0
+  y0: 520
 ball:
   x1: 10
   y1: 10

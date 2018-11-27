@@ -5,6 +5,8 @@
 from random import choice
 from time import sleep
 from tkinter import *
+from tkinter.font import Font
+
 from yaml import load
 
 PROPERTIES = 'res/properties.yaml'
@@ -17,18 +19,25 @@ HEIGHT = 'height'
 RESIZABLE = 'resizable'
 WM_ATTRIBUTES = 'wm_attributes'
 DELAY = 'delay'
+ANCHOR = 'anchor'
+ALIGN = 'align'
 BG = 'bg'
 BD = 'bd'
 HIGHLIGHTTHICKNESS = 'highlightthickness'
 HIGHLIGHTBACKGROUND = 'highlightbackground'
 HIGHLIGHTCOLOR = 'highlightcolor'
+BACKGROUND = 'background'
+BORDERWIDTH = 'borderwidth'
+ACTIVEBACKGROUND = 'activebackground'
+ACTIVEFOREGROUND = 'activeforeground'
 OFFSET = 'offset'
 RELIEF = 'relief'
-BACKGROUND = 'background'
 FILL = 'fill'
 OUTLINE = 'outline'
 TEXT = 'text'
 FG = 'fg'
+RELX = 'relx'
+RELY = 'rely'
 MAIN_MENU = 'main_menu'
 GAME = 'game'
 SUMMARY_MENU = 'summary_menu'
@@ -50,18 +59,16 @@ LEFT_ARROW = 'left_arrow'
 RIGHT_ARROW = 'right_arrow'
 
 
-def load_data():
+def prepare_data():
     with open(PROPERTIES) as stream:
         return load(stream)
 
 
 class App:
     def __init__(self):
-        self.data = load_data()
+        self.data = prepare_data()
         self.tk = self.__prepare_tk()
-        self.delay = self.data[DELAY]
-        self.canvas = self.__prepare_canvas()
-        self.main_menu = MainMenu(self.data[MAIN_MENU], self.canvas)
+        self.main_menu = MainMenu(self.data, self.tk)
 
     def __prepare_tk(self):
         data = self.data[TK]
@@ -78,37 +85,27 @@ class App:
         h = self.data[TK][HEIGHT]
         return '{}x{}+{}+{}'.format(w, h, (screen_width - w) // 2, (screen_height - h) // 2)
 
-    def __prepare_canvas(self):
-        data = self.data[CANVAS]
-        canvas = Canvas(self.tk, width=data[WIDTH], height=data[HEIGHT], bg=data[BG],
-                        bd=data[BD], highlightthickness=data[HIGHLIGHTTHICKNESS])
-        canvas.pack()
-        canvas.update()
-        return canvas
-
     def start(self):
         while self.main_menu.checked():
             self.tk.update_idletasks()
             self.tk.update()
-            sleep(self.delay)
+            sleep(self.data[DELAY])
 
 
 class MainMenu:
-    def __init__(self, data, canvas):
+    def __init__(self, data, tk):
         self.data = data
-        self.canvas = canvas
         self.flag = True
-        self.frame = Frame(self.canvas, width=100, height=100, bg='white', bd=1)
-        self.frame.pack(side='left')
-        self.canvas.configure(bg='black')
-        self.canvas.pack()
-        self.canvas.update()
-        # self.id = canvas.create_rectangle(self.data[X1], self.data[Y1], self.data[X2], self.data[Y2],
-        #                                   fill=self.data[FILL], width=self.data[WIDTH], outline=self.data[OUTLINE])
-        # self.game = Game(data, canvas)
-        # self.info_menu = InfoMenu(data, canvas)
-        # self.help_menu = HelpMenu(data, canvas)
-        # self.canvas.move(self.frame.winfo_id(), self.data[X0], self.data[Y0])
+        self.frame = Frame(tk, width=300, height=400, bg='#000000', highlightbackground='#c868db',
+                           highlightthickness=2, padx=30, pady=30)
+        self.frame.place(relx=0.5, rely=0.5, anchor=CENTER)
+        button = Button(self.frame, text='Exit', font=Font(family='Helvetica', size=14, weight='bold'),
+                        width=20, height=30, bg='#000000', fg='#ffffff', highlightbackground='#c868db',
+                        highlightthickness=1, activebackground='#c868db', activeforeground='#ffffff')
+        button.pack()
+
+    def __exit(self):
+        self.flag = False
 
     def checked(self):
         return self.flag
@@ -129,6 +126,14 @@ class MainMenu:
 #         self.flag = True
 #         self.paddle = Paddle(canvas, self.data[PADDLE])
 #         self.ball = Ball(canvas, self.data[BALL], self.paddle.id)
+#
+#     def __prepare_canvas(self):
+#         data = self.data[CANVAS]
+#         canvas = Canvas(self.tk, width=data[WIDTH], height=data[HEIGHT], bg=data[BG],
+#                         bd=data[BD], highlightthickness=data[HIGHLIGHTTHICKNESS])
+#         canvas.pack()
+#         canvas.update()
+#         return canvas
 #
 #     def checked(self):
 #         return self.flag

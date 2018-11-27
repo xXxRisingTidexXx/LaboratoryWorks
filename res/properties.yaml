@@ -10,6 +10,28 @@ tk:
     - -topmost
     - 1
 delay: 0.01
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 canvas:
   width: 1000
   height: 600

@@ -1,55 +1,64 @@
 tk:
   title: Ping-pong
+  width: 1000
+  height: 600
   resizable:
     - 0
     - 0
   wm_attributes:
     - -topmost
     - 1
-  shift_escape: <Shift-Escape>
+delay: 0.01
 canvas:
   width: 1000
   height: 600
+  bg: '#000000'
   bd: 0
   highlightthickness: 0
-paddle:
-  x1: 0
-  y1: 0
-  x2: 100
-  y2: 10
-  color: blue
-  x0: 200
-  y0: 400
-  dxl: -4
-  dxr: 4
-  left_arrow: <Key-Left>
-  right_arrow: <Key-Right>
-abyss:
-  x1: 0
-  y1: 0
-  x2: 1000
-  y2: 80
-  color: black
-  x0: 0
-  y0: 520
-ball:
-  x1: 10
-  y1: 10
-  x2: 25
-  y2: 25
-  color: red
-  x0: 455
-  y0: 170
-  dx:
-    - -3
-    - -2
-    - -1
-    - 1
-    - 2
-    - 3
-  dy:
-    - -3
-    - -2
-    - -1
-game:
-  delay: 0.01
+main_menu:
+  x1: -175
+  y1: -200
+  x2: 175
+  y2: 200
+  fill: '#000000'
+  width: 2
+  outline: '#d2b6ea'
+  x0: 500
+  y0: 300
+  game:
+    paddle:
+      x1: 0
+      y1: 0
+      x2: 150
+      y2: 10
+      fill: '#ffffff'
+      x0: 200
+      y0: 450
+      dxl: -4
+      dxr: 4
+      left_arrow: <Key-Left>
+      right_arrow: <Key-Right>
+    ball:
+      x1: 0
+      y1: 0
+      x2: 20
+      y2: 20
+      fill: '#ffffff'
+      x0: 455
+      y0: 170
+      dx:
+        - -3
+        - -2
+        - -1
+        - 1
+        - 2
+        - 3
+      dy:
+        - -3
+        - -2
+        - -1
+    summary_menu:
+
+  info_menu:
+
+  help_menu:

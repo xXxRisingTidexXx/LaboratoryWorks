@@ -1,15 +1,6 @@
 """
 Проект №2
 ІПЗ - 12, Петраківський Данило
-
-
-Ping-pong
-
-It's a simple implementation of the famous game, where player is to move his paddle in order to avoid ball's hit of
-the abyss. After recosheets the ball has an acceleration; each recosheet scores 1 point. Move, protect and compete!
-
-The game is started from console; if you wanna exit it, press "Shift+Esc"; use left and right arrows to move the
-paddle; collect score points after border hits.
 """
 from random import choice
 from time import sleep
@@ -18,43 +9,48 @@ from yaml import load
 
 PROPERTIES = 'res/properties.yaml'
 TK = 'tk'
+CANVAS = 'canvas'
+FRAME = ''
 TITLE = 'title'
 WIDTH = 'width'
 HEIGHT = 'height'
 RESIZABLE = 'resizable'
 WM_ATTRIBUTES = 'wm_attributes'
 DELAY = 'delay'
-CANVAS = 'canvas'
 BG = 'bg'
 BD = 'bd'
 HIGHLIGHTTHICKNESS = 'highlightthickness'
+HIGHLIGHTBACKGROUND = 'highlightbackground'
+HIGHLIGHTCOLOR = 'highlightcolor'
+OFFSET = 'offset'
+RELIEF = 'relief'
+BACKGROUND = 'background'
+FILL = 'fill'
+OUTLINE = 'outline'
+TEXT = 'text'
+FG = 'fg'
 MAIN_MENU = 'main_menu'
+GAME = 'game'
+SUMMARY_MENU = 'summary_menu'
+INFO_MENU = 'info_menu'
+HELP_MENU = 'help_menu'
+PADDLE = 'paddle'
+BALL = 'ball'
 X1 = 'x1'
 Y1 = 'y1'
 X2 = 'x2'
 Y2 = 'y2'
-FILL = 'fill'
-OUTLINE = 'outline'
 X0 = 'x0'
 Y0 = 'y0'
-GAME = 'game'
-PADDLE = 'paddle'
+DX = 'dx'
+DY = 'dy'
 DXL = 'dxl'
 DXR = 'dxr'
 LEFT_ARROW = 'left_arrow'
 RIGHT_ARROW = 'right_arrow'
-BALL = 'ball'
-DX = 'dx'
-DY = 'dy'
-SUMMARY_MENU = 'summary_menu'
-INFO_MENU = 'info_menu'
-HELP_MENU = 'help_menu'
 
 
 def load_data():
-    """
-    Loads all data from property file; later it will be saved in App class.
-    """
     with open(PROPERTIES) as stream:
         return load(stream)
 
@@ -72,6 +68,7 @@ class App:
         tk = Tk()
         tk.title(data[TITLE])
         tk.geometry(self.__prepare_geometry(tk.winfo_screenwidth(), tk.winfo_screenheight()))
+        tk.configure(background=data[BACKGROUND])
         tk.resizable(data[RESIZABLE][0], data[RESIZABLE][1])
         tk.wm_attributes(data[WM_ATTRIBUTES][0], data[WM_ATTRIBUTES][1])
         return tk

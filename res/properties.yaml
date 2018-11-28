@@ -4,48 +4,66 @@ tk:
   height: 600
   background: '#000000'
   resizable:
-    - 0
-    - 0
+    width: 0
+    height: 0
   wm_attributes:
     - -topmost
     - 1
 delay: 0.01
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-canvas:
-  width: 1000
-  height: 600
-  bg: '#000000'
-  bd: 0
-  highlightthickness: 0
 main_menu:
-  x1: -175
-  y1: -200
-  x2: 175
-  y2: 200
-  x0: 500
-  y0: 300
+  frame:
+    bg: '#000000'
+    highlightthickness: 2
+    highlightbackground: '#c868db'
+    padx: 5
+    pady: 10
+    relx: 0.5
+    rely: 0.5
+    anchor: center
+  buttons:
+    - Play
+    - Info
+    - Help
+    - Exit
+  button:
+    font:
+      family: Helvetica
+      size: 18
+      weight: bold
+    relief: flat
+    highlightthickness: 0
+    bg: '#c868db'
+    fg: '#000000'
+    activebackground: '#ffffff'
+    activeforeground: '#000000'
+    padx: 25
+    pady: 18
+    ipadx: 70
+    ipady: 8
+    fill: x
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   game:
+    canvas:
+      width: 1000
+      height: 600
+      bg: '#000000'
+      bd: 0
+      highlightthickness: 0
     paddle:
       x1: 0
       y1: 0

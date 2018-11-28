@@ -2,61 +2,105 @@
 Проект №2
 ІПЗ - 12, Петраківський Данило
 """
-from random import choice
 from time import sleep
 from tkinter import *
 from tkinter.font import Font
-
 from yaml import load
 
 PROPERTIES = 'res/properties.yaml'
 TK = 'tk'
-CANVAS = 'canvas'
-FRAME = ''
 TITLE = 'title'
+BACKGROUND = 'background'
+RESIZABLE = 'resizable'
 WIDTH = 'width'
 HEIGHT = 'height'
-RESIZABLE = 'resizable'
 WM_ATTRIBUTES = 'wm_attributes'
 DELAY = 'delay'
-ANCHOR = 'anchor'
-ALIGN = 'align'
+MAIN_MENU = 'main_menu'
+FRAME = 'frame'
 BG = 'bg'
-BD = 'bd'
 HIGHLIGHTTHICKNESS = 'highlightthickness'
 HIGHLIGHTBACKGROUND = 'highlightbackground'
-HIGHLIGHTCOLOR = 'highlightcolor'
-BACKGROUND = 'background'
-BORDERWIDTH = 'borderwidth'
-ACTIVEBACKGROUND = 'activebackground'
-ACTIVEFOREGROUND = 'activeforeground'
-OFFSET = 'offset'
-RELIEF = 'relief'
-FILL = 'fill'
-OUTLINE = 'outline'
-TEXT = 'text'
-FG = 'fg'
+PADX = 'padx'
+PADY = 'pady'
 RELX = 'relx'
 RELY = 'rely'
-MAIN_MENU = 'main_menu'
-GAME = 'game'
-SUMMARY_MENU = 'summary_menu'
-INFO_MENU = 'info_menu'
-HELP_MENU = 'help_menu'
-PADDLE = 'paddle'
-BALL = 'ball'
-X1 = 'x1'
-Y1 = 'y1'
-X2 = 'x2'
-Y2 = 'y2'
-X0 = 'x0'
-Y0 = 'y0'
-DX = 'dx'
-DY = 'dy'
-DXL = 'dxl'
-DXR = 'dxr'
-LEFT_ARROW = 'left_arrow'
-RIGHT_ARROW = 'right_arrow'
+ANCHOR = 'anchor'
+BUTTONS = 'buttons'
+BUTTON = 'button'
+FONT = 'font'
+FAMILY = 'family'
+SIZE = 'size'
+WEIGHT = 'weight'
+RELIEF = 'relief'
+FG = 'fg'
+ACTIVEBACKGROUND = 'activebackground'
+ACTIVEFOREGROUND = 'activeforeground'
+IPADX = 'ipadx'
+IPADY = 'ipady'
+FILL = 'fill'
+
+
+# CANVAS = 'canvas'
+# ANCHOR = 'anchor'
+# BG = 'bg'
+# BD = 'bd'
+# HIGHLIGHTTHICKNESS = 'highlightthickness'
+# HIGHLIGHTBACKGROUND = 'highlightbackground'
+# HIGHLIGHTCOLOR = 'highlightcolor'
+# BORDERWIDTH = 'borderwidth'
+# ACTIVEBACKGROUND = 'activebackground'
+# ACTIVEFOREGROUND = 'activeforeground'
+# OFFSET = 'offset'
+# RELIEF = 'relief'
+# FILL = 'fill'
+# OUTLINE = 'outline'
+# TEXT = 'text'
+# FG = 'fg'
+# RELX = 'relx'
+# RELY = 'rely'
+# GAME = 'game'
+# SUMMARY_MENU = 'summary_menu'
+# INFO_MENU = 'info_menu'
+# HELP_MENU = 'help_menu'
+# PADDLE = 'paddle'
+# BALL = 'ball'
+# X1 = 'x1'
+# Y1 = 'y1'
+# X2 = 'x2'
+# Y2 = 'y2'
+# X0 = 'x0'
+# Y0 = 'y0'
+# DX = 'dx'
+# DY = 'dy'
+# DXL = 'dxl'
+# DXR = 'dxr'
+# LEFT_ARROW = 'left_arrow'
+# RIGHT_ARROW = 'right_arrow'
+
+
+class App:
+    def __init__(self):
+        self.data = prepare_data()
+        self.tk = self.__prepare_tk()
+        self.delay = self.data[DELAY]
+        self.main_menu = MainMenu(self.data[MAIN_MENU], self.tk)
+
+    def __prepare_tk(self):
+        data = self.data[TK]
+        tk = Tk()
+        tk.title(data[TITLE])
+        tk.geometry('{}x{}'.format(tk.winfo_screenwidth(), tk.winfo_screenheight()))
+        tk.configure(background=data[BACKGROUND])
+        tk.resizable(data[RESIZABLE][WIDTH], data[RESIZABLE][HEIGHT])
+        tk.wm_attributes(data[WM_ATTRIBUTES][0], data[WM_ATTRIBUTES][1])
+        return tk
+
+    def start(self):
+        while self.main_menu.checked():
+            self.tk.update_idletasks()
+            self.tk.update()
+            sleep(self.delay)
 
 
 def prepare_data():
@@ -64,45 +108,50 @@ def prepare_data():
         return load(stream)
 
 
-class App:
-    def __init__(self):
-        self.data = prepare_data()
-        self.tk = self.__prepare_tk()
-        self.main_menu = MainMenu(self.data, self.tk)
-
-    def __prepare_tk(self):
-        data = self.data[TK]
-        tk = Tk()
-        tk.title(data[TITLE])
-        tk.geometry(self.__prepare_geometry(tk.winfo_screenwidth(), tk.winfo_screenheight()))
-        tk.configure(background=data[BACKGROUND])
-        tk.resizable(data[RESIZABLE][0], data[RESIZABLE][1])
-        tk.wm_attributes(data[WM_ATTRIBUTES][0], data[WM_ATTRIBUTES][1])
-        return tk
-
-    def __prepare_geometry(self, screen_width, screen_height):
-        w = self.data[TK][WIDTH]
-        h = self.data[TK][HEIGHT]
-        return '{}x{}+{}+{}'.format(w, h, (screen_width - w) // 2, (screen_height - h) // 2)
-
-    def start(self):
-        while self.main_menu.checked():
-            self.tk.update_idletasks()
-            self.tk.update()
-            sleep(self.data[DELAY])
-
-
 class MainMenu:
     def __init__(self, data, tk):
         self.data = data
+        self.tk = tk
         self.flag = True
-        self.frame = Frame(tk, width=300, height=400, bg='#000000', highlightbackground='#c868db',
-                           highlightthickness=2, padx=30, pady=30)
-        self.frame.place(relx=0.5, rely=0.5, anchor=CENTER)
-        button = Button(self.frame, text='Exit', font=Font(family='Helvetica', size=14, weight='bold'),
-                        width=20, height=30, bg='#000000', fg='#ffffff', highlightbackground='#c868db',
-                        highlightthickness=1, activebackground='#c868db', activeforeground='#ffffff')
-        button.pack()
+        self.frame = self.__prepare_frame()
+        self.buttons = self.__prepare_buttons()
+        self.frame_place_info = self.frame.place_info()
+
+    def __prepare_frame(self):
+        data = self.data[FRAME]
+        frame = Frame(self.tk, bg=data[BG], highlightthickness=data[HIGHLIGHTTHICKNESS],
+                      highlightbackground=data[HIGHLIGHTBACKGROUND], padx=data[PADX], pady=data[PADY])
+        frame.place(relx=data[RELX], rely=data[RELY], anchor=data[ANCHOR])
+        frame.update()
+        return frame
+
+    def __prepare_buttons(self):
+        data = self.data[BUTTONS]
+        font = self.__prepare_font()
+        return self.__prepare_button(data[0], font, self.__play), self.__prepare_button(data[1], font, self.__info), \
+            self.__prepare_button(data[2], font, self.__help), self.__prepare_button(data[3], font, self.__exit)
+
+    def __prepare_font(self):
+        data = self.data[BUTTON][FONT]
+        return Font(family=data[FAMILY], size=data[SIZE], weight=data[WEIGHT])
+
+    def __prepare_button(self, text, font, command):
+        data = self.data[BUTTON]
+        button = Button(self.frame, text=text, font=font, command=command, relief=data[RELIEF],
+                        highlightthickness=data[HIGHLIGHTTHICKNESS], bg=data[BG], fg=data[FG],
+                        activebackground=data[ACTIVEBACKGROUND], activeforeground=data[ACTIVEFOREGROUND])
+        button.pack(padx=data[PADX], pady=data[PADY], ipadx=data[IPADX], ipady=data[IPADY], fill=data[FILL])
+        button.update()
+        return button
+
+    def __play(self):
+        pass
+
+    def __info(self):
+        pass
+
+    def __help(self):
+        pass
 
     def __exit(self):
         self.flag = False

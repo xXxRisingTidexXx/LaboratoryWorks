@@ -10,11 +10,11 @@ from yaml import load
 PROPERTIES = 'res/properties.yaml'
 TK = 'tk'
 TITLE = 'title'
-BACKGROUND = 'background'
 RESIZABLE = 'resizable'
 WIDTH = 'width'
 HEIGHT = 'height'
 WM_ATTRIBUTES = 'wm_attributes'
+BACKGROUND = 'background'
 DELAY = 'delay'
 MAIN_MENU = 'main_menu'
 FRAME = 'frame'
@@ -42,9 +42,10 @@ IPADY = 'ipady'
 FILL = 'fill'
 
 HELP_MENU = 'help_menu'
-HEADER = 'header'
+HEADER_LABEL = 'header_label'
 TEXT = 'text'
-WRAPPER = 'wrapper'
+WRAPPER_LABEL = 'wrapper_label'
+BACK_BUTTON = 'back_button'
 
 # FOREGROUND = 'foreground'
 # CANVAS = 'canvas'
@@ -89,9 +90,9 @@ class App:
         tk = Tk()
         tk.title(data[TITLE])
         tk.geometry('{}x{}'.format(tk.winfo_screenwidth(), tk.winfo_screenheight()))
-        tk.configure(background=data[BACKGROUND])
         tk.resizable(data[RESIZABLE][WIDTH], data[RESIZABLE][HEIGHT])
         tk.wm_attributes(data[WM_ATTRIBUTES][0], data[WM_ATTRIBUTES][1])
+        tk.configure(background=data[BACKGROUND])
         return tk
 
     def start(self):
@@ -195,8 +196,8 @@ class MainMenu(Menu):
 class HelpMenu(Menu):
     def __init__(self, data, tk, main_menu):
         super().__init__(data, tk)
-        self.header_label = self.prepare_label(self.data[HEADER])
-        self.wrapper_label = self.prepare_label(self.data[WRAPPER])
+        self.header_label = self.prepare_label(self.data[HEADER_LABEL])
+        self.wrapper_label = self.prepare_label(self.data[WRAPPER_LABEL])
         self.back_button = self.prepare_button(self.data[BUTTON], self.__back)
         self.main_menu = main_menu
 

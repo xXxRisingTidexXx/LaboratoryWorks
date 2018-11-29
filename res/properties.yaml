@@ -1,14 +1,12 @@
 tk:
   title: Ping-pong
-  width: 1000
-  height: 600
-  background: '#000000'
   resizable:
     width: 0
     height: 0
   wm_attributes:
     - -topmost
     - 1
+  background: '#000000'
 delay: 0.01
 main_menu:
   frame:
@@ -56,7 +54,7 @@ main_menu:
       relx: 0.5
       rely: 0.5
       anchor: center
-    header:
+    header_label:
       text: Ping-pong v0.1.0
       font:
         family: Verdana
@@ -70,7 +68,7 @@ main_menu:
       pady: 5
       ipadx: 30
       ipady: 5
-    wrapper:
+    wrapper_label:
       text: |
         It's a classic Ping-pong game, where you're to hit the ball using paddle.
         The more ball doesn't hit the floor, the more points you score. Use left
@@ -88,7 +86,7 @@ main_menu:
       pady: 5
       ipadx: 30
       ipady: 5
-    button:
+    back_button:
       text: Back
       font:
         family: Helvetica

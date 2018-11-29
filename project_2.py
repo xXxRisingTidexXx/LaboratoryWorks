@@ -26,12 +26,13 @@ PADY = 'pady'
 RELX = 'relx'
 RELY = 'rely'
 ANCHOR = 'anchor'
-BUTTONS = 'buttons'
 BUTTON = 'button'
+TEXTS = 'texts'
 FONT = 'font'
 FAMILY = 'family'
 SIZE = 'size'
 WEIGHT = 'weight'
+STYLE = 'style'
 RELIEF = 'relief'
 FG = 'fg'
 ACTIVEBACKGROUND = 'activebackground'
@@ -40,29 +41,21 @@ IPADX = 'ipadx'
 IPADY = 'ipady'
 FILL = 'fill'
 
+HELP_MENU = 'help_menu'
+HEADER = 'header'
+TEXT = 'text'
+WRAPPER = 'wrapper'
 
+# FOREGROUND = 'foreground'
 # CANVAS = 'canvas'
-# ANCHOR = 'anchor'
-# BG = 'bg'
 # BD = 'bd'
-# HIGHLIGHTTHICKNESS = 'highlightthickness'
-# HIGHLIGHTBACKGROUND = 'highlightbackground'
 # HIGHLIGHTCOLOR = 'highlightcolor'
 # BORDERWIDTH = 'borderwidth'
-# ACTIVEBACKGROUND = 'activebackground'
-# ACTIVEFOREGROUND = 'activeforeground'
 # OFFSET = 'offset'
-# RELIEF = 'relief'
-# FILL = 'fill'
 # OUTLINE = 'outline'
-# TEXT = 'text'
-# FG = 'fg'
-# RELX = 'relx'
-# RELY = 'rely'
 # GAME = 'game'
-# SUMMARY_MENU = 'summary_menu'
 # INFO_MENU = 'info_menu'
-# HELP_MENU = 'help_menu'
+# SUMMARY = 'summary'
 # PADDLE = 'paddle'
 # BALL = 'ball'
 # X1 = 'x1'
@@ -81,13 +74,18 @@ FILL = 'fill'
 
 class App:
     def __init__(self):
-        self.data = prepare_data()
-        self.tk = self.__prepare_tk()
+        self.data = self.prepare_data()
+        self.tk = self.prepare_tk(self.data[TK])
         self.delay = self.data[DELAY]
         self.main_menu = MainMenu(self.data[MAIN_MENU], self.tk)
 
-    def __prepare_tk(self):
-        data = self.data[TK]
+    # noinspection PyMethodMayBeStatic
+    def prepare_data(self):
+        with open(PROPERTIES) as stream:
+            return load(stream)
+
+    # noinspection PyMethodMayBeStatic
+    def prepare_tk(self, data):
         tk = Tk()
         tk.title(data[TITLE])
         tk.geometry('{}x{}'.format(tk.winfo_screenwidth(), tk.winfo_screenheight()))
@@ -97,52 +95,84 @@ class App:
         return tk
 
     def start(self):
-        while self.main_menu.checked():
+        while self.main_menu.active:
             self.tk.update_idletasks()
             self.tk.update()
             sleep(self.delay)
 
 
-def prepare_data():
-    with open(PROPERTIES) as stream:
-        return load(stream)
-
-
-class MainMenu:
+class Menu:
     def __init__(self, data, tk):
         self.data = data
         self.tk = tk
-        self.flag = True
-        self.frame = self.__prepare_frame()
-        self.buttons = self.__prepare_buttons()
-        self.frame_place_info = self.frame.place_info()
+        self.hidden = False
+        self.frame = self.prepare_frame(self.data[FRAME])
+        self.frame_place_info = None
 
-    def __prepare_frame(self):
-        data = self.data[FRAME]
+    def prepare_frame(self, data):
         frame = Frame(self.tk, bg=data[BG], highlightthickness=data[HIGHLIGHTTHICKNESS],
                       highlightbackground=data[HIGHLIGHTBACKGROUND], padx=data[PADX], pady=data[PADY])
         frame.place(relx=data[RELX], rely=data[RELY], anchor=data[ANCHOR])
         frame.update()
         return frame
 
-    def __prepare_buttons(self):
-        data = self.data[BUTTONS]
-        font = self.__prepare_font()
-        return self.__prepare_button(data[0], font, self.__play), self.__prepare_button(data[1], font, self.__info), \
-            self.__prepare_button(data[2], font, self.__help), self.__prepare_button(data[3], font, self.__exit)
-
-    def __prepare_font(self):
-        data = self.data[BUTTON][FONT]
-        return Font(family=data[FAMILY], size=data[SIZE], weight=data[WEIGHT])
-
-    def __prepare_button(self, text, font, command):
-        data = self.data[BUTTON]
-        button = Button(self.frame, text=text, font=font, command=command, relief=data[RELIEF],
-                        highlightthickness=data[HIGHLIGHTTHICKNESS], bg=data[BG], fg=data[FG],
-                        activebackground=data[ACTIVEBACKGROUND], activeforeground=data[ACTIVEFOREGROUND])
-        button.pack(padx=data[PADX], pady=data[PADY], ipadx=data[IPADX], ipady=data[IPADY], fill=data[FILL])
+    def prepare_button(self, data, command, text=None, font=None):
+        text = self.check_text(data, text)
+        font = self.check_font(data, font)
+        style = data[STYLE]
+        button = Button(self.frame, text=text, font=font, command=command, relief=style[RELIEF],
+                        highlightthickness=style[HIGHLIGHTTHICKNESS], bg=style[BG], fg=style[FG],
+                        activebackground=style[ACTIVEBACKGROUND], activeforeground=style[ACTIVEFOREGROUND])
+        button.pack(padx=style[PADX], pady=style[PADY], ipadx=style[IPADX], ipady=style[IPADY], fill=style[FILL])
         button.update()
         return button
+
+    # noinspection PyMethodMayBeStatic
+    def check_text(self, data, text):
+        return data[TEXT] if text is None else text
+
+    def check_font(self, data, font):
+        return self.prepare_font(data[FONT]) if font is None else font
+
+    # noinspection PyMethodMayBeStatic
+    def prepare_font(self, data):
+        return Font(family=data[FAMILY], size=data[SIZE], weight=data[WEIGHT])
+
+    def prepare_label(self, data, text=None, font=None):
+        text = self.check_text(data, text)
+        font = self.check_font(data, font)
+        label = Label(self.frame, text=text, font=font, relief=data[RELIEF],
+                      highlightthickness=data[HIGHLIGHTTHICKNESS], bg=data[BG], fg=data[FG])
+        label.pack(padx=data[PADX], pady=data[PADY], ipadx=data[IPADX], ipady=data[IPADY])
+        label.update()
+        return label
+
+    def hide(self):
+        if not self.hidden:
+            self.hidden = True
+            self.frame_place_info = self.frame.place_info()
+            self.frame.place_forget()
+
+    def visualize(self):
+        if self.hidden:
+            self.hidden = False
+            self.frame.place(self.frame_place_info)
+
+
+class MainMenu(Menu):
+    def __init__(self, data, tk):
+        super().__init__(data, tk)
+        self.buttons = self.prepare_buttons(self.data[BUTTON])
+        self.help_menu = None
+        self.active = True
+
+    def prepare_buttons(self, data):
+        texts = data[TEXTS]
+        font = self.prepare_font(data[FONT])
+        return self.prepare_button(data, self.__play, texts[0], font), \
+            self.prepare_button(data, self.__info, texts[1], font), \
+            self.prepare_button(data, self.__help, texts[2], font), \
+            self.prepare_button(data, self.__exit, texts[3], font)
 
     def __play(self):
         pass
@@ -151,13 +181,28 @@ class MainMenu:
         pass
 
     def __help(self):
-        pass
+        self.help_menu = self.check_help_menu()
+        self.hide()
+        self.help_menu.visualize()
+
+    def check_help_menu(self):
+        return HelpMenu(self.data[HELP_MENU], self.tk, self) if self.help_menu is None else self.help_menu
 
     def __exit(self):
-        self.flag = False
+        self.active = False
 
-    def checked(self):
-        return self.flag
+
+class HelpMenu(Menu):
+    def __init__(self, data, tk, main_menu):
+        super().__init__(data, tk)
+        self.header_label = self.prepare_label(self.data[HEADER])
+        self.wrapper_label = self.prepare_label(self.data[WRAPPER])
+        self.back_button = self.prepare_button(self.data[BUTTON], self.__back)
+        self.main_menu = main_menu
+
+    def __back(self):
+        self.hide()
+        self.main_menu.visualize()
 
 
 # class Game:
@@ -172,7 +217,7 @@ class MainMenu:
 #     def __init__(self, data, canvas):
 #         self.data = data
 #         self.canvas = canvas
-#         self.flag = True
+#         self.active = True
 #         self.paddle = Paddle(canvas, self.data[PADDLE])
 #         self.ball = Ball(canvas, self.data[BALL], self.paddle.id)
 #
@@ -184,8 +229,8 @@ class MainMenu:
 #         canvas.update()
 #         return canvas
 #
-#     def checked(self):
-#         return self.flag
+#     def active(self):
+#         return self.active
 #
 #
 # class Paddle:
@@ -290,20 +335,6 @@ class MainMenu:
 #         return paddle_coords[1] <= coords[3] <= paddle_coords[3] and \
 #             coords[2] >= paddle_coords[0] and coords[0] <= paddle_coords[2]
 #
-#
-# class SummaryMenu:
-#     def __init__(self, data, canvas):
-#         pass
-#
-#
-# class HelpMenu:
-#     def __init__(self, data, canvas):
-#         pass
-#
-#
-# class InfoMenu:
-#     def __init__(self, data, canvas):
-#         pass
 
 
 if __name__ == '__main__':

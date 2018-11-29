@@ -20,83 +20,127 @@ main_menu:
     relx: 0.5
     rely: 0.5
     anchor: center
-  buttons:
+  button:
+    texts:
     - Play
     - Info
     - Help
     - Exit
-  button:
     font:
       family: Helvetica
       size: 18
       weight: bold
-    relief: flat
-    highlightthickness: 0
-    bg: '#c868db'
-    fg: '#000000'
-    activebackground: '#ffffff'
-    activeforeground: '#000000'
-    padx: 25
-    pady: 18
-    ipadx: 70
-    ipady: 8
-    fill: x
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  game:
-    canvas:
-      width: 1000
-      height: 600
-      bg: '#000000'
-      bd: 0
+    style:
+      relief: flat
       highlightthickness: 0
-    paddle:
-      x1: 0
-      y1: 0
-      x2: 150
-      y2: 10
-      fill: '#ffffff'
-      x0: 200
-      y0: 450
-      dxl: -4
-      dxr: 4
-      left_arrow: <Key-Left>
-      right_arrow: <Key-Right>
-    ball:
-      x1: 0
-      y1: 0
-      x2: 20
-      y2: 20
-      fill: '#ffffff'
-      x0: 455
-      y0: 170
-      dx:
-        - -3
-        - -2
-        - -1
-        - 1
-        - 2
-        - 3
-      dy:
-        - -3
-        - -2
-        - -1
-    summary_menu:
+      bg: '#c868db'
+      fg: '#000000'
+      activebackground: '#ffffff'
+      activeforeground: '#000000'
+      padx: 25
+      pady: 18
+      ipadx: 70
+      ipady: 8
+      fill: x
+  game:
 
   info_menu:
 
   help_menu:
+    frame:
+      bg: '#000000'
+      highlightthickness: 0
+      highlightbackground: '#000000'
+      padx: 10
+      pady: 10
+      relx: 0.5
+      rely: 0.5
+      anchor: center
+    header:
+      text: Ping-pong v0.1.0
+      font:
+        family: Verdana
+        size: 16
+        weight: bold
+      relief: flat
+      highlightthickness: 0
+      bg: '#000000'
+      fg: '#c868db'
+      padx: 30
+      pady: 5
+      ipadx: 30
+      ipady: 5
+    wrapper:
+      text: |
+        It's a classic Ping-pong game, where you're to hit the ball using paddle.
+        The more ball doesn't hit the floor, the more points you score. Use left
+        and right arrows to move the paddle. Try to hit especial targets to score
+        extra points. Move, hit, supervise! Become the master of the sphere!
+      font:
+        family: Verdana
+        size: 14
+        weight: normal
+      relief: flat
+      highlightthickness: 0
+      bg: '#000000'
+      fg: '#a17bc6'
+      padx: 30
+      pady: 5
+      ipadx: 30
+      ipady: 5
+    button:
+      text: Back
+      font:
+        family: Helvetica
+        size: 18
+        weight: bold
+      style:
+        relief: flat
+        highlightthickness: 0
+        bg: '#c868db'
+        fg: '#000000'
+        activebackground: '#ffffff'
+        activeforeground: '#000000'
+        padx: 25
+        pady: 5
+        ipadx: 100
+        ipady: 8
+        fill:
+#    canvas:
+#      width: 1000
+#      height: 600
+#      bg: '#000000'
+#      bd: 0
+#      highlightthickness: 0
+#    paddle:
+#      x1: 0
+#      y1: 0
+#      x2: 150
+#      y2: 10
+#      fill: '#ffffff'
+#      x0: 200
+#      y0: 450
+#      dxl: -4
+#      dxr: 4
+#      left_arrow: <Key-Left>
+#      right_arrow: <Key-Right>
+#    ball:
+#      x1: 0
+#      y1: 0
+#      x2: 20
+#      y2: 20
+#      fill: '#ffffff'
+#      x0: 455
+#      y0: 170
+#      dx:
+#        - -3
+#        - -2
+#        - -1
+#        - 1
+#        - 2
+#        - 3
+#      dy:
+#        - -3
+#        - -2
+#        - -1
+#    summary:

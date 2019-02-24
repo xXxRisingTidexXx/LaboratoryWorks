@@ -41,6 +41,6 @@ def decimalize(num, tolerance='0.001', rounding=ROUND_HALF_EVEN):
     return Decimal(num).quantize(Decimal(tolerance), rounding=rounding)
 
 
-# print(distribute([decimalize(1), decimalize(2), decimalize(2), decimalize(0.8)],
-#                  [decimalize(1.5), decimalize(3.5), decimalize(3.2), decimalize(1.2)],
-#                  decimalize(7.5)))
+print(distribute([decimalize(1), decimalize(2), decimalize(2), decimalize(0.8)],
+                 [decimalize(1.5), decimalize(3.5), decimalize(3.2), decimalize(1.2)],
+                 decimalize(7.5)))

@@ -7,7 +7,7 @@ def lcm(a, b):
 
 
 class Rational:
-    __quotient_validator = compile(r'^(-?[1-9]\d*)/([1-9]\d*)$')
+    __quotient_validator = compile(r'^(-?\d+)/([1-9]\d*)$')
 
     def __init__(self, *args):
         try:
@@ -16,11 +16,11 @@ class Rational:
                     quotient = self.__quotient_validator.match(args[0]).groups()
                     self.__m, self.__n = int(quotient[0]), int(quotient[1])
                     self.__try_reduce()
-                except TypeError:
+                except (TypeError, AttributeError):
                     self.__m, self.__n = int(args[0]), 1
             elif len(args) == 2:
                 self.__m, self.__n = int(args[0]), int(args[1])
-                if self.__m == 0 or self.__n == 0:
+                if self.__n == 0:
                     raise ValueError()
                 self.__try_negate()
                 self.__try_reduce()
@@ -59,3 +59,22 @@ class Rational:
 
     def __le__(self, other):
         return not self > other
+
+    def __add__(self, other):
+        return Rational(
+            self.__m * other.__n + other.__m * self.__n, self.__n * other.__n
+        )
+
+    def __sub__(self, other):
+        return Rational(
+            self.__m * other.__n - other.__m * self.__n, self.__n * other.__n
+        )
+
+    def __mul__(self, other):
+        return Rational(self.__m * other.__m, self.__n * other.__n)
+
+    def __truediv__(self, other):
+        return Rational(self.__m * other.__n, self.__n * other.__m)
+
+    def __neg__(self):
+        return Rational(-self.__m, self.__n)
